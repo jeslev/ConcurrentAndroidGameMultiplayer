@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/jeslev/Documents/ConcurrentGameNetwork/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="/home/jeslev/Documents/ConcurrentGameNetwork/app/build/intermediates/pre-dexed/debug/classes-c1181e14d6b79efa21057b3b6fe29f6fee72e863.jar" />
+    </item>
+    <item
+        jar="/home/jeslev/Documents/ConcurrentGameNetwork/app/build/intermediates/exploded-aar/com.android.support/design/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
+        <dex dex="/home/jeslev/Documents/ConcurrentGameNetwork/app/build/intermediates/pre-dexed/debug/classes-524692c920700e8f572a24b99e2bcf011c13b3e5.jar" />
+    </item>
+    <item
+        jar="/home/jeslev/Documents/ConcurrentGameNetwork/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="/home/jeslev/Documents/ConcurrentGameNetwork/app/build/intermediates/pre-dexed/debug/classes-0027ece1eb0a75114690547a2f4f0c565e4c1738.jar" />
+    </item>
+    <item
+        jar="/home/jeslev/Documents/ConcurrentGameNetwork/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="/home/jeslev/Documents/ConcurrentGameNetwork/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-0b578c39c265598fea35d708203ff3f02b74c722.jar" />
+    </item>
+    <item
+        jar="/home/jeslev/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="/home/jeslev/Documents/ConcurrentGameNetwork/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1-d2d792ed191913d3ebf964618b1df8d89a276e15.jar" />
+    </item>
+
+</items>

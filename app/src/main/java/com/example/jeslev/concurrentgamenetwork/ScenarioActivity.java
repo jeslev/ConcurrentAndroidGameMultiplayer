@@ -21,6 +21,7 @@ public class ScenarioActivity extends AppCompatActivity {
     private Bitmap scaled;
     int xx = 100;
     int yy = 150;
+    public Game game;
 
     public SurfaceView SurfaceViewX;
 
@@ -31,11 +32,12 @@ public class ScenarioActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        game = new Game();
 
         SurfaceViewX = new MySurfaceView(this);
         setContentView(SurfaceViewX);
 
-        paint2.setColor(Color.GRAY);
+        paint2.setColor(Color.BLUE);
         paint2.setStyle(Paint.Style.FILL);
 
         paint3.setColor(Color.GREEN);
@@ -74,42 +76,46 @@ public class ScenarioActivity extends AppCompatActivity {
             int wx = getWidth();
             int wy = getHeight();
 
-            System.out.println("TouchEvent111"+"X:" + event.getX() + ",Y:" + event.getY());
+            //System.out.println("TouchEvent111"+"X:" + event.getX() + ",Y:" + event.getY());
             if( 70 < event.getX() && event.getX()<130 && (wy-280)< event.getY() && event.getY()<(wy-220) ){
                 //Toast.makeText(getApplicationContext(), "click ARRIBA", Toast.LENGTH_SHORT).show();
                 System.out.println(" Click ARRIBA");
-
-                yy = yy - 5;
+                game.rotateLeft(0);
+                //yy = yy - 5;
             }
 
             if( 70 < event.getX() && event.getX()<130 && (wy-180)< event.getY() && event.getY()<(wy-120) ){
                 //Toast.makeText(getApplicationContext(), "click ABAJO", Toast.LENGTH_SHORT).show();
                 System.out.println(" Click ABAJO");
-                yy = yy  + 5;
+                game.rotateRight(0);
+                //yy = yy  + 5;
             }
 
             if( 20 < event.getX() && event.getX()<80 && (wy-230)< event.getY() && event.getY()<(wy-170) ){
                 //Toast.makeText(getApplicationContext(), "click IZQUI", Toast.LENGTH_SHORT).show();
                 System.out.println(" Click IZQUIERDA");
-                xx = xx  - 5;
+                game.rotateLeft(0);
+                //xx = xx  - 5;
             }
 
             if( 120 < event.getX() && event.getX()<180 && (wy-230)< event.getY() && event.getY()<(wy-170) ){
                 //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
                 System.out.println(" Click DERECHA");
-                xx = xx  + 5;
+                game.rotateRight(0);
+                //xx = xx  + 5;
             }
 
             if( (wx-280) < event.getX() && event.getX()<(wx-220) && (wy-280)< event.getY() && event.getY()<(wy-220) ){
                 //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
                 System.out.println(" Click A");
-                xx = xx  + 5;
+                game.turbo(0);
+                //xx = xx  + 5;
             }
 
             if( (wx-280) < event.getX() && event.getX()<(wx-220) && (wy-180)< event.getY() && event.getY()<(wy-120) ){
                 //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
                 System.out.println(" Click B");
-                xx = xx  + 5;
+                //xx = xx  + 5;
             }
 
             //ServidorEnviarCoordenadas();
@@ -187,8 +193,9 @@ public class ScenarioActivity extends AppCompatActivity {
             //if (flat == 1){
             //    pos = imageXYposition(canvas, bitmap, new XYPosition(centerX,centerY));
             //}
-            System.out.println("wx: " + wx + ",wy: "+wy);
-                    canvas.drawCircle(100, wy - 250, 30, paint2); // up arrow
+            //System.out.println("wx: " + wx + ",wy: "+wy);
+
+            canvas.drawCircle(100, wy - 250, 30, paint2); // up arrow
 
             canvas.drawCircle(100, wy-150, 30, paint2); // down arrow
 
@@ -206,7 +213,8 @@ public class ScenarioActivity extends AppCompatActivity {
             //if (flat == 1){
             //    canvas.drawBitmap(bitmap, pos.getX(), pos.getY(), null);
             //}
-            canvas.drawBitmap(bitmap, xx, yy, null);
+            game.update(bitmap,canvas,wx,wy);
+
             holder.unlockCanvasAndPost(canvas);
 
 
@@ -219,7 +227,7 @@ public class ScenarioActivity extends AppCompatActivity {
 
 
             canvas.drawColor(Color.BLACK);
-			XYPosition pos = imageXYposition(canvas, bitmap, new XYPosition(centerX,centerY));
+			//XYPosition pos = imageXYposition(canvas, bitmap, new XYPosition(centerX,centerY));
 
 			canvas.drawCircle(50, 50, 25, paint2);
 
@@ -234,7 +242,7 @@ public class ScenarioActivity extends AppCompatActivity {
 	    //		canvas.drawText("Envio FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF  x=" + xx + " y=" + yy, 50, 10,paintServerEnvia);
 
 
-			canvas.drawBitmap(bitmap, pos.getX(), pos.getY(), null);
+			//canvas.drawBitmap(bitmap, pos.getX(), pos.getY(), null);
 
 
 
@@ -243,65 +251,65 @@ public class ScenarioActivity extends AppCompatActivity {
 
 		}
 
-        private XYPosition imageXYposition(Canvas canvas, Bitmap bitmap,XYPosition position) {
-            int bitmapHeight = bitmap.getHeight();
-            int bitmapWidth = bitmap.getWidth();
-            int canvasWidth = canvas.getWidth();
-            int canvasHeight = canvas.getHeight();
-//Log.d("TouchEvent", "bitmapHeight : " + bitmapHeight + ", bitmapWidth : "+bitmapWidth +", canvasWidth : "+canvasWidth+", canvasHeight : "+canvasHeight);
-            int x = position.getX() - bitmapWidth / 2;
-            if (x < 0) {
-                x = 0;
-            }
-            if (x > canvasWidth - bitmapWidth) {
-                x = canvasWidth - bitmapWidth;
-            }
-            int y = position.getY() - bitmapHeight / 2;
-            if (y < 0) {
-                y = 0;
-            }
-            if (y > canvasHeight - bitmapHeight) {
-                y = canvasHeight - bitmapHeight;
-            }
-            //Log.d("TouchEvent", "x : " + x + ", y : "+ y);
-            //System.out.println("TouchEvent"+ "x : " + x + ", y : "+ y);
-            return new XYPosition(x, y);
-
-
-
-
-
-        }
-
-    }
-    public class XYPosition {
-
-        private int x;
-        private int y;
-        XYPosition(){
-            this(0,0);
-        }
-        XYPosition(int x,int y){
-            this.x = x;
-            this.y = y;
-        }
-
-        public int getX() {
-            return x;
-
-        }
-
-        public void setX(int x) {
-            this.x = x;
-
-        }
-        public int getY() {
-            return y;
-        }
-
-        public void setY(int y) {
-            this.y = y;
-        }
+//        private XYPosition imageXYposition(Canvas canvas, Bitmap bitmap,XYPosition position) {
+//            int bitmapHeight = bitmap.getHeight();
+//            int bitmapWidth = bitmap.getWidth();
+//            int canvasWidth = canvas.getWidth();
+//            int canvasHeight = canvas.getHeight();
+////Log.d("TouchEvent", "bitmapHeight : " + bitmapHeight + ", bitmapWidth : "+bitmapWidth +", canvasWidth : "+canvasWidth+", canvasHeight : "+canvasHeight);
+//            int x = position.getX() - bitmapWidth / 2;
+//            if (x < 0) {
+//                x = 0;
+//            }
+//            if (x > canvasWidth - bitmapWidth) {
+//                x = canvasWidth - bitmapWidth;
+//            }
+//            int y = position.getY() - bitmapHeight / 2;
+//            if (y < 0) {
+//                y = 0;
+//            }
+//            if (y > canvasHeight - bitmapHeight) {
+//                y = canvasHeight - bitmapHeight;
+//            }
+//            //Log.d("TouchEvent", "x : " + x + ", y : "+ y);
+//            //System.out.println("TouchEvent"+ "x : " + x + ", y : "+ y);
+//            return new XYPosition(x, y);
+//
+//
+//
+//
+//
+//        }
 
     }
+//    public class XYPosition {
+//
+//        private int x;
+//        private int y;
+//        XYPosition(){
+//            this(0,0);
+//        }
+//        XYPosition(int x,int y){
+//            this.x = x;
+//            this.y = y;
+//        }
+//
+//        public int getX() {
+//            return x;
+//
+//        }
+//
+//        public void setX(int x) {
+//            this.x = x;
+//
+//        }
+//        public int getY() {
+//            return y;
+//        }
+//
+//        public void setY(int y) {
+//            this.y = y;
+//        }
+//
+//    }
 }

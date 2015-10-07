@@ -24,7 +24,9 @@ public class Game {
 
         ship.update(wx, wy);
         Matrix matrix = new Matrix();
-        matrix.setRotate((float)ship.getAngle(), ship.getPosX()-14, ship.getPosY()-19);
+        //matrix.postRotate((float)ship.getAngle());
+        matrix.postRotate((float)ship.getAngle(), 14, 19);
+        matrix.postTranslate(ship.getPosX(), ship.getPosY());
         canvas.drawBitmap(bitmap, matrix, null);
         System.err.println(ship.getPosX()+" "+ship.getPosY()+" "+ship.getAngle());
     }

@@ -8,7 +8,7 @@ public class Spaceship {
 
     private double tempSpeed[] = {0.0,0.0};
     private double tempAcceleration[] = {0.0,0.0};
-    private int position[] = {500,550};
+    private int position[] = {50,100};
     private double speed;
     private double acceleration;
     private double anglePosition;
@@ -18,7 +18,7 @@ public class Spaceship {
     private int boundarieX, boundarieY;
 
     public Spaceship(){
-        anglePosition = Math.PI / 2;
+        anglePosition = 270;
         angleSpeed = 0.0;
         turnon = false;
     }
@@ -63,11 +63,11 @@ public class Spaceship {
     }
 
     public void rotateLeft(){
-        angleSpeed = 0.05*1;
+        angleSpeed = 5.0;
     }
 
     public void rotateRight(){
-        angleSpeed = -0.05*1;
+        angleSpeed = -5.0;
     }
 
     public void noRotate(){

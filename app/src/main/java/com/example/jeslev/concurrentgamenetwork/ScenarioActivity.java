@@ -77,42 +77,43 @@ public class ScenarioActivity extends AppCompatActivity {
             int wy = getHeight();
 
             //System.out.println("TouchEvent111"+"X:" + event.getX() + ",Y:" + event.getY());
-            if( 70 < event.getX() && event.getX()<130 && (wy-280)< event.getY() && event.getY()<(wy-220) ){
+            if( 70 < event.getX() && event.getX()<130 && (wy-180)< event.getY() && event.getY()<(wy-120) ){
                 //Toast.makeText(getApplicationContext(), "click ARRIBA", Toast.LENGTH_SHORT).show();
                 System.out.println(" Click ARRIBA");
-                game.rotateLeft(0);
+                game.rotateRight(0);
                 //yy = yy - 5;
             }
 
-            if( 70 < event.getX() && event.getX()<130 && (wy-180)< event.getY() && event.getY()<(wy-120) ){
+            if( 70 < event.getX() && event.getX()<130 && (wy-80)< event.getY() && event.getY()<(wy-20) ){
                 //Toast.makeText(getApplicationContext(), "click ABAJO", Toast.LENGTH_SHORT).show();
                 System.out.println(" Click ABAJO");
-                game.rotateRight(0);
+                game.rotateLeft(0);
                 //yy = yy  + 5;
             }
 
-            if( 20 < event.getX() && event.getX()<80 && (wy-230)< event.getY() && event.getY()<(wy-170) ){
+            if( 20 < event.getX() && event.getX()<80 && (wy-130)< event.getY() && event.getY()<(wy-70) ){
                 //Toast.makeText(getApplicationContext(), "click IZQUI", Toast.LENGTH_SHORT).show();
                 System.out.println(" Click IZQUIERDA");
-                game.rotateLeft(0);
+                game.rotateRight(0);
                 //xx = xx  - 5;
             }
 
-            if( 120 < event.getX() && event.getX()<180 && (wy-230)< event.getY() && event.getY()<(wy-170) ){
+            if( 120 < event.getX() && event.getX()<180 && (wy-130)< event.getY() && event.getY()<(wy-70) ){
                 //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
                 System.out.println(" Click DERECHA");
-                game.rotateRight(0);
+                game.rotateLeft(0);
                 //xx = xx  + 5;
             }
 
-            if( (wx-280) < event.getX() && event.getX()<(wx-220) && (wy-280)< event.getY() && event.getY()<(wy-220) ){
+            if( (wx-180) < event.getX() && event.getX()<(wx-120) && (wy-180)< event.getY() && event.getY()<(wy-120) ){
                 //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
                 System.out.println(" Click A");
                 game.turbo(0);
+                game.noRotate(0);
                 //xx = xx  + 5;
             }
 
-            if( (wx-280) < event.getX() && event.getX()<(wx-220) && (wy-180)< event.getY() && event.getY()<(wy-120) ){
+            if( (wx-180) < event.getX() && event.getX()<(wx-120) && (wy-80)< event.getY() && event.getY()<(wy-20) ){
                 //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
                 System.out.println(" Click B");
                 //xx = xx  + 5;
@@ -195,17 +196,17 @@ public class ScenarioActivity extends AppCompatActivity {
             //}
             //System.out.println("wx: " + wx + ",wy: "+wy);
 
-            canvas.drawCircle(100, wy - 250, 30, paint2); // up arrow
+            canvas.drawCircle(100, wy - 150, 30, paint2); // up arrow
 
-            canvas.drawCircle(100, wy-150, 30, paint2); // down arrow
+            canvas.drawCircle(100, wy-50, 30, paint2); // down arrow
 
-            canvas.drawCircle(50, wy-200, 30, paint2); // left arrow
+            canvas.drawCircle(50, wy-100, 30, paint2); // left arrow
 
-            canvas.drawCircle(150, wy-200, 30, paint2); // right arrow
+            canvas.drawCircle(150, wy-100, 30, paint2); // right arrow
 
-            canvas.drawCircle(wx-250, wy-250, 30, paint2); // a button
+            canvas.drawCircle(wx-150, wy-150, 30, paint2); // a button
 
-            canvas.drawCircle(wx-250, wy-150, 30, paint2); // b button
+            canvas.drawCircle(wx-150, wy-50, 30, paint2); // b button
 
             //canvas.drawRect(xx, yy, xx+10, yy+10, paint3);
             //canvas.drawText("Envio FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF  x=" + xx + " y=" + yy, 50, 10,paintServer);
@@ -229,13 +230,13 @@ public class ScenarioActivity extends AppCompatActivity {
             canvas.drawColor(Color.BLACK);
 			//XYPosition pos = imageXYposition(canvas, bitmap, new XYPosition(centerX,centerY));
 
-			canvas.drawCircle(50, 50, 25, paint2);
+			//canvas.drawCircle(50, 50, 25, paint2);
 
-			canvas.drawCircle(50, 150, 25, paint2);
+			//canvas.drawCircle(50, 150, 25, paint2);
 
-            canvas.drawCircle(25, 100, 25, paint2);
+            //canvas.drawCircle(25, 100, 25, paint2);
 
-            canvas.drawCircle(75, 100, 25, paint2);
+            //canvas.drawCircle(75, 100, 25, paint2);
 
 			//canvas.drawRect(xx, yy, xx+10, yy+10, paint3);
 

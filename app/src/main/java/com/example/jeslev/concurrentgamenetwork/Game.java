@@ -17,12 +17,16 @@ public class Game {
         ship = new Spaceship();
     }
 
-    public void update(Bitmap bitmap, Canvas canvas, int wx, int wy){
-        this.canvas = canvas;
+    public void update(int wx,int wy) {
         this.wx = wx;
         this.wy = wy;
 
         ship.update(wx, wy);
+    }
+
+    public void draw(Bitmap bitmap, Canvas canvas, int wx, int wy){
+        this.canvas = canvas;
+
         Matrix matrix = new Matrix();
         //matrix.postRotate((float)ship.getAngle());
         matrix.postRotate((float)ship.getAngle(), 14, 19);
@@ -47,4 +51,6 @@ public class Game {
     public void noRotate(int id){
         ship.noRotate();
     }
+
+    public boolean getTurbo() {return ship.getTurbo();}
 }

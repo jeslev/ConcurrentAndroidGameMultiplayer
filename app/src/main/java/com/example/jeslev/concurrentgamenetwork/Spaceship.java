@@ -38,12 +38,12 @@ public class Spaceship {
             tempSpeed[0] += tempAcceleration[0];
             tempSpeed[1] += tempAcceleration[1];
             /*friction stop*/
-            tempSpeed[0]*= 0.88;
-            tempSpeed[1]*= 0.88;
-        }else{
-            /*More friction to stop */
             tempSpeed[0]*= 0.98;
             tempSpeed[1]*= 0.98;
+        }else{
+            /*More friction to stop */
+            tempSpeed[0]*= 0.8;
+            tempSpeed[1]*= 0.8;
         }
 
         /*Check boundaries*/
@@ -54,8 +54,8 @@ public class Spaceship {
     }
 
     private void convertAngleVector(){
-        tempAcceleration[0] = Math.cos(anglePosition);
-        tempAcceleration[1] = Math.sin(anglePosition);
+        tempAcceleration[0] = Math.cos(anglePosition*Math.PI/180.0);
+        tempAcceleration[1] = Math.sin(anglePosition*Math.PI/180.0);
     }
 
     public void turbo(){
@@ -63,11 +63,11 @@ public class Spaceship {
     }
 
     public void rotateLeft(){
-        angleSpeed = 5.0;
+        angleSpeed = 12.0;
     }
 
     public void rotateRight(){
-        angleSpeed = -5.0;
+        angleSpeed = -12.0;
     }
 
     public void noRotate(){
@@ -77,4 +77,6 @@ public class Spaceship {
     public int getPosX(){ return position[0];}
     public int getPosY(){ return position[1];}
     public double getAngle(){ return anglePosition; }
+
+    public boolean getTurbo() { return turnon;}
 }

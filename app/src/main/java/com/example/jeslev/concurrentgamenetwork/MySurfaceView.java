@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -27,9 +28,11 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     int xx = 100;
     int yy = 150;
 
+    TCPServer tcpServer;
+
     private MainThread thread;
 
-    public MySurfaceView(Context context) {
+    public MySurfaceView(Context context, TCPServer tcpServer) {
 
         super(context);
         //add callback to the surface holder (to detect press button (events) )
@@ -37,6 +40,8 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
         game = new Game();
         thread = new MainThread(getHolder(), this);
+
+        this.tcpServer = tcpServer;
 
         //focusable to get touch events
         setFocusable(true);
@@ -97,6 +102,15 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         }
     }*/
 
+
+    public void updateToClients(){
+        if(tcpServer!=null){
+            tcpServer.sendMessage("Accion de server!");
+            Log.e("TCP","Envio accion de SERVER");
+        }
+        else Log.e("TCP","tcp NULL");
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -142,6 +156,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click ARRIBA", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click ARRIBA");
             game.rotateRight(0);
+            updateToClients();
             //yy = yy - 5;
         }
 
@@ -149,6 +164,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click ABAJO", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click ABAJO");
             game.rotateLeft(0);
+            updateToClients();
             //yy = yy  + 5;
         }
 
@@ -156,6 +172,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click IZQUI", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click IZQUIERDA");
             game.rotateRight(0);
+            updateToClients();
             //xx = xx  - 5;
         }
 
@@ -163,6 +180,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click DERECHA");
             game.rotateLeft(0);
+            updateToClients();
             //xx = xx  + 5;
         }
 
@@ -171,6 +189,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //System.out.println(" Click A");
             game.turbo(0);
             game.noRotate(0);
+            updateToClients();
             //xx = xx  + 5;
         }
 
@@ -178,6 +197,9 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click B");
             //xx = xx  + 5;
+
+            game.shot(0);
+            updateToClients();
         }
 
     }
@@ -188,6 +210,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click ARRIBA", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click ARRIBA");
             game.noRotate(0);
+            updateToClients();
             //yy = yy - 5;
         }
 
@@ -195,6 +218,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click ABAJO", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click ABAJO");
             game.noRotate(0);
+            updateToClients();
             //yy = yy  + 5;
         }
 
@@ -202,6 +226,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click IZQUI", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click IZQUIERDA");
             game.noRotate(0);
+            updateToClients();
             //xx = xx  - 5;
         }
 
@@ -209,6 +234,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click DERECHA");
             game.noRotate(0);
+            updateToClients();
             //xx = xx  + 5;
         }
 
@@ -217,6 +243,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //System.out.println(" Click A");
             //game.turbo(0);
             game.noRotate(0);
+            updateToClients();
             //xx = xx  + 5;
         }
 
@@ -224,7 +251,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click B");
             //xx = xx  + 5;
-            game.shot(0);
+            //updateToClients();
         }
 
     }
@@ -288,38 +315,6 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             game.draw(bitmapOff,bitmapMissil,canvas,wx,wy);
 
     }
-
-//    private void doDraw(SurfaceHolder holder,Bitmap bitmap,int centerX, int centerY) {
-//        Canvas canvas = holder.lockCanvas();
-//
-//        //canvas.drawColor(Color.GRAY);
-//
-//
-//        canvas.drawColor(Color.BLACK);
-//        //XYPosition pos = imageXYposition(canvas, bitmap, new XYPosition(centerX,centerY));
-//
-//        //canvas.drawCircle(50, 50, 25, paint2);
-//
-//        //canvas.drawCircle(50, 150, 25, paint2);
-//
-//        //canvas.drawCircle(25, 100, 25, paint2);
-//
-//        //canvas.drawCircle(75, 100, 25, paint2);
-//
-//        //canvas.drawRect(xx, yy, xx+10, yy+10, paint3);
-//
-//        //		canvas.drawText("Envio FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF  x=" + xx + " y=" + yy, 50, 10,paintServerEnvia);
-//
-//
-//        //canvas.drawBitmap(bitmap, pos.getX(), pos.getY(), null);
-//
-//
-//
-//        holder.unlockCanvasAndPost(canvas);
-//
-//
-//    }
-
 
 
 }

@@ -8,12 +8,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
-import static android.view.View.*;
+import static android.view.View.OnClickListener;
 
 public class MainActivity extends AppCompatActivity {
 
     Button startButton;
+    EditText ipText;
+    String TAG_IP = "ip";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,14 +25,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ipText = (EditText) findViewById(R.id.ipText);
+
         startButton = (Button) findViewById(R.id.startButton);
 
         startButton.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View arg0) {
 
-                Intent scenarioIntent = new Intent(getApplicationContext(),ScenarioActivity.class);
+                String iptxt = ipText.getText().toString();
 
+                Intent scenarioIntent = new Intent(getApplicationContext(),ScenarioActivity.class);
+                scenarioIntent.putExtra(TAG_IP,iptxt);
                 startActivity(scenarioIntent);
 
             }

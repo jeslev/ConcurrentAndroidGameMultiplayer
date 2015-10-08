@@ -28,8 +28,9 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     int yy = 150;
 
     private MainThread thread;
+    TCPClient tcpClient;
 
-    public MySurfaceView(Context context) {
+    public MySurfaceView(Context context, TCPClient tcpClient) {
 
         super(context);
         //add callback to the surface holder (to detect press button (events) )
@@ -38,6 +39,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         game = new Game();
         thread = new MainThread(getHolder(), this);
 
+        this.tcpClient = tcpClient;
         //focusable to get touch events
         setFocusable(true);
 
@@ -96,6 +98,12 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             mTcpServer.sendMessage(xx + " "+yy);
         }
     }*/
+
+    public void updateToServer(){
+        if(tcpClient!=null){
+
+        }
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -178,6 +186,8 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click B");
             //xx = xx  + 5;
+
+            game.shot(0);
         }
 
     }
@@ -224,7 +234,6 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click B");
             //xx = xx  + 5;
-            game.shot(0);
         }
 
     }
@@ -288,37 +297,6 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             game.draw(bitmapOff,bitmapMissil,canvas,wx,wy);
 
     }
-
-//    private void doDraw(SurfaceHolder holder,Bitmap bitmap,int centerX, int centerY) {
-//        Canvas canvas = holder.lockCanvas();
-//
-//        //canvas.drawColor(Color.GRAY);
-//
-//
-//        canvas.drawColor(Color.BLACK);
-//        //XYPosition pos = imageXYposition(canvas, bitmap, new XYPosition(centerX,centerY));
-//
-//        //canvas.drawCircle(50, 50, 25, paint2);
-//
-//        //canvas.drawCircle(50, 150, 25, paint2);
-//
-//        //canvas.drawCircle(25, 100, 25, paint2);
-//
-//        //canvas.drawCircle(75, 100, 25, paint2);
-//
-//        //canvas.drawRect(xx, yy, xx+10, yy+10, paint3);
-//
-//        //		canvas.drawText("Envio FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF  x=" + xx + " y=" + yy, 50, 10,paintServerEnvia);
-//
-//
-//        //canvas.drawBitmap(bitmap, pos.getX(), pos.getY(), null);
-//
-//
-//
-//        holder.unlockCanvasAndPost(canvas);
-//
-//
-//    }
 
 
 

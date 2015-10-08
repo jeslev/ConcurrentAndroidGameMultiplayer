@@ -1,15 +1,23 @@
     package com.example.jeslev.concurrentgamenetwork;
 
-import android.media.MediaPlayer;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.SurfaceView;
+    import android.content.Intent;
+    import android.media.MediaPlayer;
+    import android.os.AsyncTask;
+    import android.os.Bundle;
+    import android.support.v7.app.AppCompatActivity;
+    import android.support.v7.widget.Toolbar;
+    import android.util.Log;
+    import android.view.SurfaceView;
 
 public class ScenarioActivity extends AppCompatActivity {
 
     public SurfaceView SurfaceViewX;
     final MediaPlayer mp = new MediaPlayer();
+    ConnectTask connectTask;
+    String TAG_IP = "ip";
+    String myip = "";
+
+    public TCPClient tcpClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +36,15 @@ public class ScenarioActivity extends AppCompatActivity {
             mp.start();
         }catch(Exception e){ e.printStackTrace();}
         */
-        SurfaceViewX = new MySurfaceView(this); // "this" send context of the current class
+
+        Intent intent = getIntent();
+        myip = intent.getStringExtra(TAG_IP);
+
+
+        connectTask  = new ConnectTask(myip);
+        connectTask.execute("");
+
+        SurfaceViewX = new MySurfaceView(this, tcpClient); // "this" send context of the current class
         setContentView(SurfaceViewX);
 
 
@@ -36,34 +52,42 @@ public class ScenarioActivity extends AppCompatActivity {
     }
 
 
-    //    public class XYPosition {
-//
-//        private int x;
-//        private int y;
-//        XYPosition(){
-//            this(0,0);
-//        }
-//        XYPosition(int x,int y){
-//            this.x = x;
-//            this.y = y;
-//        }
-//
-//        public int getX() {
-//            return x;
-//
-//        }
-//
-//        public void setX(int x) {
-//            this.x = x;
-//
-//        }
-//        public int getY() {
-//            return y;
-//        }
-//
-//        public void setY(int y) {
-//            this.y = y;
-//        }
-//
-//    }
+    public class ConnectTask extends AsyncTask<String,String,TCPClient> {
+        String myip;
+
+
+
+        public ConnectTask(String ip){
+            myip=ip;
+        }
+
+        @Override
+        protected TCPClient doInBackground(String... message) {
+            //creamos el objeto TCPClient
+            tcpClient = new TCPClient(myip,new TCPClient.OnMessageReceived() {
+                @Override
+                //Utilizamos el metodo de messageReceived(String message) de la interface OnMessageReived
+                public void messageReceived(String message) {
+                    //llama a onProgressUpdate
+                    publishProgress(message);
+                }
+            });
+            tcpClient.run();
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            //ClienteReciveCoordenadas(values[0]);/////////////////
+            //SurfaceViewA.doDraw(holderA,null, 50, 50,0);
+            Log.e("TCP", "cliente recibe accion!");
+
+
+
+        }
+    }
+
+
+
 }

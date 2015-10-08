@@ -42,10 +42,41 @@
         android:layout_marginTop="36dp" />
 
     <LinearLayout
+        android:id="@+id/panelIp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/labelState"
+        android:layout_toStartOf="@+id/labelPlayerName"
+        android:layout_toLeftOf="@+id/labelState"
+        android:layout_marginTop="53dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:weightSum="4">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Ip servidor"
+            android:layout_weight="1.0"
+            android:id="@+id/labelIptext" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ipText"
+            android:layout_weight="3.0" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/panelIp"
         android:layout_toStartOf="@+id/labelPlayerName"
         android:layout_toLeftOf="@+id/labelState"
         android:layout_marginTop="53dp"

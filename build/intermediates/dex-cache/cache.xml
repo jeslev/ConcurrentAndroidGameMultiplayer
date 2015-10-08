@@ -2,39 +2,39 @@
 <items version="2" >
 
     <item
-        jar="/home/noa/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1-041a1418fe6de26f03569470a683aedbd7aa6097.jar" />
-    </item>
-    <item
-        jar="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentAndroidGameMultiplayer/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/classes-1f817fe4146adaa0f29eed10e89bbf24c8b76f1e.jar" />
-    </item>
-    <item
-        jar="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentAndroidGameMultiplayer/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-4b0ea89d7d6ea6a473006bb445c2527cbe1a5cde.jar" />
-    </item>
-    <item
-        jar="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentAndroidGameMultiplayer/app/build/intermediates/exploded-aar/com.android.support/design/23.0.1/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
-        <dex dex="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/classes-07493ab6b257afdedd34594d674eb0b89f64ea8b.jar" />
-    </item>
-    <item
-        jar="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentAndroidGameMultiplayer/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
+        jar="/home/jeslev/Documents/ConcurrentGameNetworkClient/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/classes-f07291bd13eba7f33237e3aaff108e001eb8e9c5.jar" />
+        <dex dex="/home/jeslev/Documents/ConcurrentGameNetworkClient/app/build/intermediates/pre-dexed/debug/classes-2df1170fcca1f91ea1dc9ac157b99a2ab7b4e08a.jar" />
+    </item>
+    <item
+        jar="/home/jeslev/Documents/ConcurrentGameNetworkClient/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="/home/jeslev/Documents/ConcurrentGameNetworkClient/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-51d1bdb13029dd04a79d6cad68477ea6e807650c.jar" />
+    </item>
+    <item
+        jar="/home/jeslev/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="/home/jeslev/Documents/ConcurrentGameNetworkClient/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1-d2d792ed191913d3ebf964618b1df8d89a276e15.jar" />
+    </item>
+    <item
+        jar="/home/jeslev/Documents/ConcurrentGameNetworkClient/app/build/intermediates/exploded-aar/com.android.support/design/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
+        <dex dex="/home/jeslev/Documents/ConcurrentGameNetworkClient/app/build/intermediates/pre-dexed/debug/classes-c04a6c2d0310d3a126c47f6f2d072027b552f6e3.jar" />
+    </item>
+    <item
+        jar="/home/jeslev/Documents/ConcurrentGameNetworkClient/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="/home/jeslev/Documents/ConcurrentGameNetworkClient/app/build/intermediates/pre-dexed/debug/classes-bbff8ae060652cb15ed36ab75794216e1aff5ac9.jar" />
     </item>
 
 </items>

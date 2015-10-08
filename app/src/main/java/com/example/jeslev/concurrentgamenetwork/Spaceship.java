@@ -6,20 +6,20 @@ package com.example.jeslev.concurrentgamenetwork;
  */
 public class Spaceship {
 
-    private double tempSpeed[] = {0.0,0.0};
-    private double tempAcceleration[] = {0.0,0.0};
+    private float tempSpeed[] = {0.0f,0.0f};
+    private float tempAcceleration[] = {0.0f,0.0f};
     private int position[] = {50,100};
     private double speed;
     private double acceleration;
-    private double anglePosition;
-    private double angleSpeed;
+    private float anglePosition;
+    private float angleSpeed;
     private int id;
     private boolean turnon;
     private int boundarieX, boundarieY;
 
     public Spaceship(){
         anglePosition = 270;
-        angleSpeed = 0.0;
+        angleSpeed = 0.0f;
         turnon = false;
     }
 
@@ -54,8 +54,8 @@ public class Spaceship {
     }
 
     private void convertAngleVector(){
-        tempAcceleration[0] = Math.cos(anglePosition*Math.PI/180.0);
-        tempAcceleration[1] = Math.sin(anglePosition*Math.PI/180.0);
+        tempAcceleration[0] = (float)Math.cos(anglePosition*Math.PI/180.0);
+        tempAcceleration[1] = (float)Math.sin(anglePosition*Math.PI/180.0);
     }
 
     public void turbo(){
@@ -63,20 +63,24 @@ public class Spaceship {
     }
 
     public void rotateLeft(){
-        angleSpeed = 12.0;
+        angleSpeed = 12.0f;
     }
 
     public void rotateRight(){
-        angleSpeed = -12.0;
+        angleSpeed = -12.0f;
     }
 
     public void noRotate(){
-        angleSpeed = 0.0;
+        angleSpeed = 0.0f;
     }
 
     public int getPosX(){ return position[0];}
     public int getPosY(){ return position[1];}
-    public double getAngle(){ return anglePosition; }
+    public float getAngle(){ return anglePosition; }
 
     public boolean getTurbo() { return turnon;}
+
+    public float[] getSpeed() { return tempSpeed;}
+
+    public float[] getAcceleration() { return tempAcceleration;}
 }

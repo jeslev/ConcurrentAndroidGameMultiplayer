@@ -17,6 +17,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     Bitmap bitmapOff;
     Bitmap bitmapOn;
+    Bitmap bitmapMissil;
     Game game;
     private Bitmap scaled;
 
@@ -44,6 +45,9 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
                 R.drawable.spaceship);
         bitmapOn = BitmapFactory.decodeResource(getResources(),
                 R.drawable.spaceship2);//////////////////
+
+        bitmapMissil = BitmapFactory.decodeResource(getResources(),
+                R.drawable.misil);
 
         paint2.setColor(Color.BLUE);
         paint2.setStyle(Paint.Style.FILL);
@@ -220,6 +224,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click B");
             //xx = xx  + 5;
+            game.shot(0);
         }
 
     }
@@ -278,9 +283,9 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         //    canvas.drawBitmap(bitmap, pos.getX(), pos.getY(), null);
         //}
         if(game.getTurbo())
-            game.draw(bitmapOn,canvas,wx,wy);
+            game.draw(bitmapOn,bitmapMissil,canvas,wx,wy);
         else
-            game.draw(bitmapOff,canvas,wx,wy);
+            game.draw(bitmapOff,bitmapMissil,canvas,wx,wy);
 
     }
 

@@ -1,6 +1,5 @@
     package com.example.jeslev.concurrentgamenetwork;
 
-import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +19,7 @@ public class ScenarioActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        try {
+        /*try {
             mp.reset();
             AssetFileDescriptor afd;
             afd = getBaseContext().getAssets().openFd("music.mp3");
@@ -28,7 +27,7 @@ public class ScenarioActivity extends AppCompatActivity {
             mp.prepare();
             mp.start();
         }catch(Exception e){ e.printStackTrace();}
-        
+        */
         SurfaceViewX = new MySurfaceView(this); // "this" send context of the current class
         setContentView(SurfaceViewX);
 

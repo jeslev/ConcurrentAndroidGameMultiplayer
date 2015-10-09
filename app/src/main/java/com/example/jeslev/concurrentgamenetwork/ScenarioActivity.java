@@ -47,16 +47,16 @@ public class ScenarioActivity extends AppCompatActivity {
 
 
 
-    public class ConnectTask extends AsyncTask<String, Game, TCPServer> {
+    public class ConnectTask extends AsyncTask<String, Container, TCPServer> {
 
         public ConnectTask(){
             //we create a TCPClient object and
             tcpServer = new TCPServer(new TCPServer.OnMessageReceived() {
                 @Override
                 //here the messageReceived method is implemented
-                public void messageReceived(Game message) {
+                public void messageReceived(Game message, int id) {
                     //this method calls the onProgressUpdate
-                    publishProgress(message);
+                    publishProgress(new Container(message,id));
                 }
             });
         }
@@ -71,7 +71,7 @@ public class ScenarioActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onProgressUpdate(Game... values) {
+        protected void onProgressUpdate(Container... values) {
             super.onProgressUpdate(values);
 
             ///////agregar(values[0]);//////////////////////////////////////////
@@ -80,7 +80,7 @@ public class ScenarioActivity extends AppCompatActivity {
             // notify the adapter that the data set has changed. This means that new message received
             // from server was added to the list
             /////mAdapter.notifyDataSetChanged();
-            SurfaceViewX.setGame(values[0]);
+            SurfaceViewX.setGame(values[0].getGame(), values[0].getID());
             //ServidorReciveCoordenadas(values[0]);
             Log.e("TCP", "Servidor recibe coordenadas");
 

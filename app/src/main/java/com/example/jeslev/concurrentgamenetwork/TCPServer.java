@@ -3,13 +3,10 @@ package com.example.jeslev.concurrentgamenetwork;
 import android.util.Log;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * Created by jeslev on 08/10/15.
@@ -24,16 +21,27 @@ public class TCPServer {
     PrintWriter mOut;
     BufferedReader in;
 
-    OutputStream oStream;
-    ObjectOutputStream ooStream;
+    //ArrayList<OutputStream> oStream;
+    //ArrayList<ObjectOutputStream> ooStream;
 
-    InputStream istream;
-    ObjectInputStream oistream;
+    //ArrayList<InputStream> istream;
+    //ArrayList<ObjectInputStream> oistream;
 
+
+    ArrayList<ClientThread> threads;
+
+    int id;
 
     //el constructor pide una interface OnMessageReceived
     public TCPServer(OnMessageReceived messageListener) {
         this.messageListener = messageListener;
+        threads = new ArrayList<ClientThread>();
+        id = 0;
+//        oStream = new ArrayList<OutputStream>();
+//        ooStream = new ArrayList<ObjectOutputStream>();
+//
+//        istream = new ArrayList<InputStream>();
+//        oistream = new ArrayList<ObjectInputStream>();
     }
 
     /**
@@ -42,11 +50,17 @@ public class TCPServer {
      */
     public synchronized void sendMessage(Game message){
         try {
-            if (ooStream != null) {
-                ooStream.reset();
-                ooStream.writeObject(message);
-                ooStream.flush();
-                Log.e("TCP", "Envio accion de SERVER " + message.getShip().getAngle());
+            for(ClientThread xclient : threads){
+                xclient.sendMessage(message);
+            }
+        }catch (Exception e) { e.printStackTrace();}
+    }
+
+    public synchronized void sendMessage(Game message,int id){
+        try {
+            for(ClientThread xclient : threads){
+                if(xclient.getID()!=id)
+                    xclient.sendMessage(message);
             }
         }catch (Exception e) { e.printStackTrace();}
     }
@@ -63,66 +77,26 @@ public class TCPServer {
             //here you must put your computer's IP address.
             //InetAddress serverAddr = InetAddress.getByName(SERVERIP);
 
-            Log.e("TCP Server","S : Connecting...");
-
-            //create a socket to make the connection with the server
-            //Socket socket = new Socket(serverAddr, SERVERPORT);
-
             ServerSocket serverSocket = new ServerSocket(SERVERPORT);
 
-            //create client socket... the method accept() listens for a connection to be made to this socket and accepts it.
-            Socket client = serverSocket.accept();
+            while(running) {
+                Log.e("TCP Server", "S : Connecting...");
 
-            //System.out.println("S: Receiving...");
-            Log.e("TCP Server","S: Receiving...");
+                //create a socket to make the connection with the server
+                //Socket socket = new Socket(serverAddr, SERVERPORT);
 
-            try {
 
-                //send the message to the server
-                //mOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(client.getOutputStream())), true);
+                //create client socket... the method accept() listens for a connection to be made to this socket and accepts it.
+                Socket client = serverSocket.accept();
 
-                oStream = client.getOutputStream();
-                ooStream = new ObjectOutputStream(oStream);
+                //System.out.println("S: Receiving...");
+                Log.e("TCP Server", "S: Receiving...");
+                id++;
+                ClientThread tmpThread = new ClientThread(client, id, messageListener);
 
-                Log.e("TCP Server", "C: Sent.");
-
-                Log.e("TCP Server", "C: Done.");
-
-                //receive the message which the server sends back
-                //in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-
-                istream = client.getInputStream();
-                oistream = new ObjectInputStream(istream);
-                //in this while the client listens for the messages sent by the server
-                while (running) {
-//                    message = in.readLine();
-                    Game game = null;
-                    game= (Game) oistream.readObject();
-                    Log.e("TCP", ""+game.getShip().getAngle());
-                    if (game != null && messageListener != null) {
-                        messageListener.messageReceived(game);
-                    }
-//                    if (message != null && messageListener != null) {
-//                        //call the method messageReceived from MyActivity class
-//                        messageListener.messageReceived(message);
-//                    }
-//                    message = null;
-
-                }
-
-//                Log.e("RESPONSE FROM CLIENT", "S: Received Message: '" + message + "'");
-
-            } catch (Exception e) {
-
-                Log.e("TCP Server", "S: Error", e);
-
-            } finally {
-                //the socket must be closed. It is not possible to reconnect to this socket
-                // after it is closed, which means a new socket instance has to be created.
-                client.close();
-                serverSocket.close();/////
+                threads.add(tmpThread);
+                tmpThread.start();
             }
-
         } catch (Exception e) {
 
             Log.e("TCP Server", "C: Error", e);
@@ -134,6 +108,6 @@ public class TCPServer {
     //Declare the interface. The method messageReceived(String message) will must be implemented in the MyActivity
     //class at on asynckTask doInBackground
     public interface OnMessageReceived {
-        public void messageReceived(Game message);
+        public void messageReceived(Game message,int id);
     }
 }

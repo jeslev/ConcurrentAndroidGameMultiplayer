@@ -112,6 +112,14 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         else Log.e("TCP","tcp NULL");
     }
 
+    public void updateToClients(int id){
+        if(tcpServer!=null){
+            tcpServer.sendMessage(game,id);
+
+        }
+        else Log.e("TCP","tcp NULL");
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -349,7 +357,10 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         }
     }
 
-    public synchronized void setGame(Game tmp){ game=tmp;}
+    public synchronized void setGame(Game tmp,int id){
+        game=tmp;
+        updateToClients(id);
+    }
 
 
 }

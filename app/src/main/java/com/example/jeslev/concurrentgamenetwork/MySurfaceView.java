@@ -107,7 +107,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     public void updateToClients(){
         if(tcpServer!=null){
             tcpServer.sendMessage(game);
-            Log.e("TCP", "Envio accion de SERVER");
+
         }
         else Log.e("TCP","tcp NULL");
     }
@@ -252,7 +252,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click B");
             //xx = xx  + 5;
-            //updateToClients();
+            updateToClients();
         }
 
     }
@@ -348,6 +348,8 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
         }
     }
+
+    public synchronized void setGame(Game tmp){ game=tmp;}
 
 
 }

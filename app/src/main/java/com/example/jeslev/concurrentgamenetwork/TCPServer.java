@@ -3,6 +3,8 @@ package com.example.jeslev.concurrentgamenetwork;
 import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -25,6 +27,10 @@ public class TCPServer {
     OutputStream oStream;
     ObjectOutputStream ooStream;
 
+    InputStream istream;
+    ObjectInputStream oistream;
+
+
     //el constructor pide una interface OnMessageReceived
     public TCPServer(OnMessageReceived messageListener) {
         this.messageListener = messageListener;
@@ -37,7 +43,10 @@ public class TCPServer {
     public synchronized void sendMessage(Game message){
         try {
             if (ooStream != null) {
+                ooStream.reset();
                 ooStream.writeObject(message);
+                ooStream.flush();
+                Log.e("TCP", "Envio accion de SERVER " + message.getShip().getAngle());
             }
         }catch (Exception e) { e.printStackTrace();}
     }
@@ -82,10 +91,17 @@ public class TCPServer {
                 //receive the message which the server sends back
                 //in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
+                istream = client.getInputStream();
+                oistream = new ObjectInputStream(istream);
                 //in this while the client listens for the messages sent by the server
                 while (running) {
 //                    message = in.readLine();
-//
+                    Game game = null;
+                    game= (Game) oistream.readObject();
+                    Log.e("TCP", ""+game.getShip().getAngle());
+                    if (game != null && messageListener != null) {
+                        messageListener.messageReceived(game);
+                    }
 //                    if (message != null && messageListener != null) {
 //                        //call the method messageReceived from MyActivity class
 //                        messageListener.messageReceived(message);
@@ -118,6 +134,6 @@ public class TCPServer {
     //Declare the interface. The method messageReceived(String message) will must be implemented in the MyActivity
     //class at on asynckTask doInBackground
     public interface OnMessageReceived {
-        public void messageReceived(String message);
+        public void messageReceived(Game message);
     }
 }

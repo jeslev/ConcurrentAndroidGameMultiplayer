@@ -6,11 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.SurfaceView;
 
 public class ScenarioActivity extends AppCompatActivity {
 
-    public SurfaceView SurfaceViewX;
+    public MySurfaceView SurfaceViewX;
     final MediaPlayer mp = new MediaPlayer();
 
     public TCPServer tcpServer;
@@ -48,14 +47,14 @@ public class ScenarioActivity extends AppCompatActivity {
 
 
 
-    public class ConnectTask extends AsyncTask<String, String, TCPServer> {
+    public class ConnectTask extends AsyncTask<String, Game, TCPServer> {
 
         public ConnectTask(){
             //we create a TCPClient object and
             tcpServer = new TCPServer(new TCPServer.OnMessageReceived() {
                 @Override
                 //here the messageReceived method is implemented
-                public void messageReceived(String message) {
+                public void messageReceived(Game message) {
                     //this method calls the onProgressUpdate
                     publishProgress(message);
                 }
@@ -72,7 +71,7 @@ public class ScenarioActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onProgressUpdate(String... values) {
+        protected void onProgressUpdate(Game... values) {
             super.onProgressUpdate(values);
 
             ///////agregar(values[0]);//////////////////////////////////////////
@@ -81,7 +80,7 @@ public class ScenarioActivity extends AppCompatActivity {
             // notify the adapter that the data set has changed. This means that new message received
             // from server was added to the list
             /////mAdapter.notifyDataSetChanged();
-
+            SurfaceViewX.setGame(values[0]);
             //ServidorReciveCoordenadas(values[0]);
             Log.e("TCP", "Servidor recibe coordenadas");
 

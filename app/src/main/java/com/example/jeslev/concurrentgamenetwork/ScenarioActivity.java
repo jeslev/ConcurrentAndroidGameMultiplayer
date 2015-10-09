@@ -36,12 +36,12 @@ public class ScenarioActivity extends AppCompatActivity {
 
 
         connectTask = new ConnectTask();
-        connectTask.execute("");
+
 
         SurfaceViewX = new MySurfaceView(this,tcpServer); // "this" send context of the current class
         setContentView(SurfaceViewX);
 
-
+        connectTask.execute("");
 
 
     }

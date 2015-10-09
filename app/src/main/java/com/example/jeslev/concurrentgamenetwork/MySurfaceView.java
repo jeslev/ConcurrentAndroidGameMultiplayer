@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -105,8 +106,8 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     public void updateToClients(){
         if(tcpServer!=null){
-            tcpServer.sendMessage("Accion de server!");
-            Log.e("TCP","Envio accion de SERVER");
+            tcpServer.sendMessage(game);
+            Log.e("TCP", "Envio accion de SERVER");
         }
         else Log.e("TCP","tcp NULL");
     }
@@ -309,11 +310,43 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         //if (flat == 1){
         //    canvas.drawBitmap(bitmap, pos.getX(), pos.getY(), null);
         //}
-        if(game.getTurbo())
-            game.draw(bitmapOn,bitmapMissil,canvas,wx,wy);
-        else
-            game.draw(bitmapOff,bitmapMissil,canvas,wx,wy);
+        if(game.getTurbo()){
 
+            Matrix matrix = new Matrix();
+            //matrix.postRotate((float)ship.getAngle());
+            matrix.postRotate(game.getShip().getAngle(), 14, 19);
+            matrix.postTranslate(game.getShip().getPosX(), game.getShip().getPosY());
+            canvas.drawBitmap(bitmapOn, matrix, null);
+            //System.err.println(ship.getPosX() + " " + ship.getPosY() + " " + ship.getAngle());
+
+            Missil tmpmissil;
+            for(int i=0;i<game.getMissil().size();i++){
+                tmpmissil = game.getMissil().get(i);
+                matrix = new Matrix();
+                matrix.postRotate(tmpmissil.getAnglePosition(),11,3);
+                matrix.postTranslate(tmpmissil.getPosX(), tmpmissil.getPosY());
+                canvas.drawBitmap(bitmapMissil,matrix,null);
+            }
+
+        }else {
+
+            Matrix matrix = new Matrix();
+            //matrix.postRotate((float)ship.getAngle());
+            matrix.postRotate(game.getShip().getAngle(), 14, 19);
+            matrix.postTranslate(game.getShip().getPosX(), game.getShip().getPosY());
+            canvas.drawBitmap(bitmapOff, matrix, null);
+            //System.err.println(ship.getPosX() + " " + ship.getPosY() + " " + ship.getAngle());
+
+            Missil tmpmissil;
+            for(int i=0;i<game.getMissil().size();i++){
+                tmpmissil = game.getMissil().get(i);
+                matrix = new Matrix();
+                matrix.postRotate(tmpmissil.getAnglePosition(),11,3);
+                matrix.postTranslate(tmpmissil.getPosX(), tmpmissil.getPosY());
+                canvas.drawBitmap(bitmapMissil,matrix,null);
+            }
+
+        }
     }
 
 

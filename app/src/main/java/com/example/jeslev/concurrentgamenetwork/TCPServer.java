@@ -3,9 +3,8 @@ package com.example.jeslev.concurrentgamenetwork;
 import android.util.Log;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -23,6 +22,9 @@ public class TCPServer {
     PrintWriter mOut;
     BufferedReader in;
 
+    OutputStream oStream;
+    ObjectOutputStream ooStream;
+
     //el constructor pide una interface OnMessageReceived
     public TCPServer(OnMessageReceived messageListener) {
         this.messageListener = messageListener;
@@ -32,11 +34,12 @@ public class TCPServer {
      * Sends the message entered by client to the server
      * @param message text entered by client
      */
-    public void sendMessage(String message){
-        if (mOut != null && !mOut.checkError()) {
-            mOut.println(message);
-            mOut.flush();
-        }
+    public synchronized void sendMessage(Game message){
+        try {
+            if (ooStream != null) {
+                ooStream.writeObject(message);
+            }
+        }catch (Exception e) { e.printStackTrace();}
     }
 
     public void stopClient(){
@@ -67,28 +70,31 @@ public class TCPServer {
             try {
 
                 //send the message to the server
-                mOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(client.getOutputStream())), true);
+                //mOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(client.getOutputStream())), true);
+
+                oStream = client.getOutputStream();
+                ooStream = new ObjectOutputStream(oStream);
 
                 Log.e("TCP Server", "C: Sent.");
 
                 Log.e("TCP Server", "C: Done.");
 
                 //receive the message which the server sends back
-                in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                //in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
                 //in this while the client listens for the messages sent by the server
                 while (running) {
-                    message = in.readLine();
-
-                    if (message != null && messageListener != null) {
-                        //call the method messageReceived from MyActivity class
-                        messageListener.messageReceived(message);
-                    }
-                    message = null;
+//                    message = in.readLine();
+//
+//                    if (message != null && messageListener != null) {
+//                        //call the method messageReceived from MyActivity class
+//                        messageListener.messageReceived(message);
+//                    }
+//                    message = null;
 
                 }
 
-                Log.e("RESPONSE FROM CLIENT", "S: Received Message: '" + message + "'");
+//                Log.e("RESPONSE FROM CLIENT", "S: Received Message: '" + message + "'");
 
             } catch (Exception e) {
 

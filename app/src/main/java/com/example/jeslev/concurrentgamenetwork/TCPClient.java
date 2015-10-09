@@ -3,9 +3,8 @@ package com.example.jeslev.concurrentgamenetwork;
 import android.util.Log;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -33,17 +32,22 @@ public class TCPClient {
     PrintWriter out;
     BufferedReader in;
 
+    Game game;
+
+    InputStream istream;
+    ObjectInputStream oistream;
+
     public TCPClient(String ip,OnMessageReceived listener) {
         SERVERIP = ip;
         mMessageListener = listener;
     }
 
-    public void sendMessage(String message){
-        if (out != null && !out.checkError()) {
-            out.println(message);
-            out.flush();
-        }
-    }
+//    public void sendMessage(String message){
+//        if (out != null && !out.checkError()) {
+//            out.println(message);
+//            out.flush();
+//        }
+//    }
 
     public void stopClient(){
         mRun = false;
@@ -63,22 +67,25 @@ public class TCPClient {
             try {
 
                 //envio de mensaje al servidor
-                out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+                //out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
                 //Log.e("TCP Client", "C: Sent.");
                 //Log.e("TCP Client", "C: Done.");
 
                 //recibe el mensaje del servidor
-                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                //in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                istream = socket.getInputStream();
+                oistream = new ObjectInputStream(istream);
 
                 //mientras escucha o envia mensajes
                 while (mRun) {
-                    servermsj = in.readLine();
+                    //servermsj = in.readLine();
+                    game = (Game) oistream.readObject();
 
-                    if (servermsj != null && mMessageListener != null) {
+                    if (game != null && mMessageListener != null) {
                         //call the method messageReceived from MyActivity class
-                        mMessageListener.messageReceived(servermsj);
+                        mMessageListener.messageReceived(game);
                     }
-                    servermsj = null;
+                    game = null;
 
                 }
 
@@ -102,6 +109,6 @@ public class TCPClient {
     //Declaramos la interface  OnMessageReived con el metodo messageReceived(String message)
     // utiliazdo en MyActivity en la clase asynckTask doInBackground
     public interface OnMessageReceived {
-        public void messageReceived(String message);
+        public void messageReceived(Game message);
     }
 }

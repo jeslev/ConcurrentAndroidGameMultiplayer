@@ -1,9 +1,11 @@
 package com.example.jeslev.concurrentgamenetwork;
 
+import java.io.Serializable;
+
 /**
  * Created by yarvis on 08/10/15.
  */
-public class Missil {
+public class Missil implements Serializable {
 
     float anglePosition;
     float speed[] = {0.0f, 0.0f};

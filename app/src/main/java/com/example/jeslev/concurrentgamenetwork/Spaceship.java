@@ -1,10 +1,12 @@
 package com.example.jeslev.concurrentgamenetwork;
 
 
+import java.io.Serializable;
+
 /**
  * Created by jeslev on 06/10/15.
  */
-public class Spaceship {
+public class Spaceship implements Serializable {
 
     private float tempSpeed[] = {0.0f,0.0f};
     private float tempAcceleration[] = {0.0f,0.0f};

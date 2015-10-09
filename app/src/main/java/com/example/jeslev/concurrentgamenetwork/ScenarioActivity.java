@@ -1,17 +1,16 @@
     package com.example.jeslev.concurrentgamenetwork;
 
     import android.content.Intent;
-    import android.media.MediaPlayer;
-    import android.os.AsyncTask;
-    import android.os.Bundle;
-    import android.support.v7.app.AppCompatActivity;
-    import android.support.v7.widget.Toolbar;
-    import android.util.Log;
-    import android.view.SurfaceView;
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 public class ScenarioActivity extends AppCompatActivity {
 
-    public SurfaceView SurfaceViewX;
+    public MySurfaceView SurfaceViewX;
     final MediaPlayer mp = new MediaPlayer();
     ConnectTask connectTask;
     String TAG_IP = "ip";
@@ -42,45 +41,50 @@ public class ScenarioActivity extends AppCompatActivity {
 
 
         connectTask  = new ConnectTask(myip);
-        connectTask.execute("");
+
 
         SurfaceViewX = new MySurfaceView(this, tcpClient); // "this" send context of the current class
-        setContentView(SurfaceViewX);
 
+        setContentView(SurfaceViewX);
+        connectTask.execute("");
 
 
     }
 
 
-    public class ConnectTask extends AsyncTask<String,String,TCPClient> {
+    public class ConnectTask extends AsyncTask<String,Game,TCPClient> {
         String myip;
 
 
 
         public ConnectTask(String ip){
-            myip=ip;
-        }
 
-        @Override
-        protected TCPClient doInBackground(String... message) {
+            myip=ip;
+
             //creamos el objeto TCPClient
             tcpClient = new TCPClient(myip,new TCPClient.OnMessageReceived() {
                 @Override
                 //Utilizamos el metodo de messageReceived(String message) de la interface OnMessageReived
-                public void messageReceived(String message) {
+                public void messageReceived(Game message) {
                     //llama a onProgressUpdate
                     publishProgress(message);
                 }
             });
+        }
+
+        @Override
+        protected TCPClient doInBackground(String... message) {
+
             tcpClient.run();
             return null;
         }
 
         @Override
-        protected void onProgressUpdate(String... values) {
+        protected void onProgressUpdate(Game... values) {
             super.onProgressUpdate(values);
             //ClienteReciveCoordenadas(values[0]);/////////////////
             //SurfaceViewA.doDraw(holderA,null, 50, 50,0);
+            SurfaceViewX.setGame(values[0]);
             Log.e("TCP", "cliente recibe accion!");
 
 

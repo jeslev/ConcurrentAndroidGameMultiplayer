@@ -1,8 +1,10 @@
 #Multiplayer Android Game
+#Client Side
 #Project
 
 TODO
 -----
-* Add client side game
-* Test serializable game class
+* Generate multiple ships
+* Implement single ship control
+* Implement colissions
 * Optimize game engine (reduce charge in main thread application)

@@ -5,6 +5,8 @@ import android.util.Log;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -32,7 +34,9 @@ public class TCPClient {
     PrintWriter out;
     BufferedReader in;
 
-    Game game;
+    OutputStream oStream;
+    ObjectOutputStream ooStream;
+
 
     InputStream istream;
     ObjectInputStream oistream;
@@ -48,6 +52,16 @@ public class TCPClient {
 //            out.flush();
 //        }
 //    }
+    public synchronized void sendMessage(Game message){
+        try {
+            if (ooStream != null) {
+                ooStream.reset();
+                ooStream.writeObject(message);
+                ooStream.flush();
+                Log.e("TCP", "Envio accion de SERVER " + message.getShip().getAngle());
+            }
+        }catch (Exception e) { e.printStackTrace();}
+    }
 
     public void stopClient(){
         mRun = false;
@@ -71,6 +85,8 @@ public class TCPClient {
                 //Log.e("TCP Client", "C: Sent.");
                 //Log.e("TCP Client", "C: Done.");
 
+                oStream = socket.getOutputStream();
+                ooStream = new ObjectOutputStream(oStream);
                 //recibe el mensaje del servidor
                 //in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 istream = socket.getInputStream();
@@ -79,13 +95,13 @@ public class TCPClient {
                 //mientras escucha o envia mensajes
                 while (mRun) {
                     //servermsj = in.readLine();
-                    game = (Game) oistream.readObject();
-
+                    Game game = null;
+                    game= (Game) oistream.readObject();
+                    Log.e("TCP", ""+game.getShip().getAngle());
                     if (game != null && mMessageListener != null) {
                         //call the method messageReceived from MyActivity class
                         mMessageListener.messageReceived(game);
                     }
-                    game = null;
 
                 }
 

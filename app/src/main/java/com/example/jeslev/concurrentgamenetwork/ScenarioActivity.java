@@ -80,12 +80,12 @@ public class ScenarioActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onProgressUpdate(Game... values) {
+        protected synchronized  void onProgressUpdate(Game... values) {
             super.onProgressUpdate(values);
             //ClienteReciveCoordenadas(values[0]);/////////////////
             //SurfaceViewA.doDraw(holderA,null, 50, 50,0);
             SurfaceViewX.setGame(values[0]);
-            Log.e("TCP", "cliente recibe accion!");
+            Log.e("TCP", "cliente recibe accion! "+ values[0].getShip().getAngle() );
 
 
 

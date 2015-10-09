@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -104,8 +105,11 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     public void updateToServer(){
         if(tcpClient!=null){
+            tcpClient.sendMessage(game);
 
         }
+        else Log.e("TCP", "tcp NULL");
+
     }
 
     public synchronized void setGame(Game tmp){ game=tmp;}
@@ -155,6 +159,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click ARRIBA", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click ARRIBA");
             game.rotateRight(0);
+            updateToServer();
             //yy = yy - 5;
         }
 
@@ -162,6 +167,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click ABAJO", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click ABAJO");
             game.rotateLeft(0);
+            updateToServer();
             //yy = yy  + 5;
         }
 
@@ -169,6 +175,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click IZQUI", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click IZQUIERDA");
             game.rotateRight(0);
+            updateToServer();
             //xx = xx  - 5;
         }
 
@@ -176,6 +183,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click DERECHA");
             game.rotateLeft(0);
+            updateToServer();
             //xx = xx  + 5;
         }
 
@@ -184,6 +192,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //System.out.println(" Click A");
             game.turbo(0);
             game.noRotate(0);
+            updateToServer();
             //xx = xx  + 5;
         }
 
@@ -193,6 +202,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //xx = xx  + 5;
 
             game.shot(0);
+            updateToServer();
         }
 
     }
@@ -203,6 +213,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click ARRIBA", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click ARRIBA");
             game.noRotate(0);
+            updateToServer();
             //yy = yy - 5;
         }
 
@@ -210,6 +221,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click ABAJO", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click ABAJO");
             game.noRotate(0);
+            updateToServer();
             //yy = yy  + 5;
         }
 
@@ -217,6 +229,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click IZQUI", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click IZQUIERDA");
             game.noRotate(0);
+            updateToServer();
             //xx = xx  - 5;
         }
 
@@ -224,6 +237,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
             //System.out.println(" Click DERECHA");
             game.noRotate(0);
+            updateToServer();
             //xx = xx  + 5;
         }
 
@@ -232,6 +246,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             //System.out.println(" Click A");
             //game.turbo(0);
             game.noRotate(0);
+            updateToServer();
             //xx = xx  + 5;
         }
 

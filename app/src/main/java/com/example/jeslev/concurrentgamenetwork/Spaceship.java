@@ -2,15 +2,16 @@ package com.example.jeslev.concurrentgamenetwork;
 
 
 import java.io.Serializable;
+import java.util.Random;
 
 /**
  * Created by jeslev on 06/10/15.
  */
-public class Spaceship implements Serializable{
+public class Spaceship implements Serializable {
 
     private float tempSpeed[] = {0.0f,0.0f};
     private float tempAcceleration[] = {0.0f,0.0f};
-    private int position[] = {50,100};
+    private float position[] = {0,0};
     private double speed;
     private double acceleration;
     private float anglePosition;
@@ -19,10 +20,16 @@ public class Spaceship implements Serializable{
     private boolean turnon;
     private int boundarieX, boundarieY;
 
-    public Spaceship(){
+    private boolean live;
+
+    public Spaceship(int wx, int wy){
         anglePosition = 270;
         angleSpeed = 0.0f;
         turnon = false;
+        live = true;
+        Random rand = new Random();
+        position[0] = rand.nextInt(wx-200) + 100;
+        position[1] = rand.nextInt(wy-200) + 100;
     }
 
     public void update(int wx,int wy){
@@ -62,6 +69,7 @@ public class Spaceship implements Serializable{
 
     public void turbo(){
         turnon = !turnon;
+        //Log.e("turbo: ", ""+turnon);
     }
 
     public void rotateLeft(){
@@ -76,8 +84,8 @@ public class Spaceship implements Serializable{
         angleSpeed = 0.0f;
     }
 
-    public int getPosX(){ return position[0];}
-    public int getPosY(){ return position[1];}
+    public float getPosX(){ return position[0];}
+    public float getPosY(){ return position[1];}
     public float getAngle(){ return anglePosition; }
 
     public boolean getTurbo() { return turnon;}
@@ -85,4 +93,8 @@ public class Spaceship implements Serializable{
     public float[] getSpeed() { return tempSpeed;}
 
     public float[] getAcceleration() { return tempAcceleration;}
+
+    public void setLive(boolean b) {live = b;}
+
+    public boolean getLive() {return live;}
 }

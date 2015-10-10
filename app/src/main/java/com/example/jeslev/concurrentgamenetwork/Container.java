@@ -1,9 +1,11 @@
 package com.example.jeslev.concurrentgamenetwork;
 
+import java.io.Serializable;
+
 /**
  * Created by yarvis on 09/10/15.
  */
-public class Container {
+public class Container implements Serializable {
 
     public Game game;
     int id;

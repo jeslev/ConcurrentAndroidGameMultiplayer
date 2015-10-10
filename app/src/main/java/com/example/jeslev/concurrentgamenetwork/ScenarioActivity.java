@@ -40,6 +40,7 @@ public class ScenarioActivity extends AppCompatActivity {
         SurfaceViewX = new MySurfaceView(this,tcpServer); // "this" send context of the current class
         setContentView(SurfaceViewX);
 
+
         connectTask.execute("");
 
 
@@ -54,7 +55,7 @@ public class ScenarioActivity extends AppCompatActivity {
             tcpServer = new TCPServer(new TCPServer.OnMessageReceived() {
                 @Override
                 //here the messageReceived method is implemented
-                public void messageReceived(Game message, int id) {
+                public synchronized void messageReceived(Game message, int id) {
                     //this method calls the onProgressUpdate
                     publishProgress(new Container(message,id));
                 }
@@ -80,6 +81,7 @@ public class ScenarioActivity extends AppCompatActivity {
             // notify the adapter that the data set has changed. This means that new message received
             // from server was added to the list
             /////mAdapter.notifyDataSetChanged();
+            Log.e("ID: ", "sdfsdf "+ values[0].getID());
             SurfaceViewX.setGame(values[0].getGame(), values[0].getID());
             //ServidorReciveCoordenadas(values[0]);
             Log.e("TCP", "Servidor recibe coordenadas");

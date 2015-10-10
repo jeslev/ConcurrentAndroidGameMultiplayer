@@ -17,7 +17,7 @@ public class TCPServer {
     public static final int SERVERPORT = 4444;
     private OnMessageReceived messageListener = null;
     private boolean running = false;
-
+    public MySurfaceView mySurfaceView;
     PrintWriter mOut;
     BufferedReader in;
 
@@ -59,14 +59,20 @@ public class TCPServer {
     public synchronized void sendMessage(Game message,int id){
         try {
             for(ClientThread xclient : threads){
-                if(xclient.getID()!=id)
+                if(xclient.getID()!=id) {
+                    //message.updateIdSpaceship(xclient.getID());
                     xclient.sendMessage(message);
+                }
             }
         }catch (Exception e) { e.printStackTrace();}
     }
 
     public void stopClient(){
         running = false;
+    }
+
+    public void setSurface(MySurfaceView surface){      //noamlr
+        this.mySurfaceView = surface;
     }
 
     public void run() {
@@ -92,7 +98,7 @@ public class TCPServer {
                 //System.out.println("S: Receiving...");
                 Log.e("TCP Server", "S: Receiving...");
                 id++;
-                ClientThread tmpThread = new ClientThread(client, id, messageListener);
+                ClientThread tmpThread = new ClientThread(client, id, messageListener, this.mySurfaceView);
 
                 threads.add(tmpThread);
                 tmpThread.start();
@@ -110,4 +116,6 @@ public class TCPServer {
     public interface OnMessageReceived {
         public void messageReceived(Game message,int id);
     }
+
+
 }

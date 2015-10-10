@@ -16,13 +16,13 @@ public class Missil implements Serializable {
 
     public Missil(Spaceship ship,int id){
         this.id = id;
-        speed[0] = ship.getSpeed()[0] + 12*ship.getAcceleration()[0];
-        speed[1] = ship.getSpeed()[1] + 12*ship.getAcceleration()[1];
+        speed[0] = ship.getSpeed()[0] + 33*ship.getAcceleration()[0];
+        speed[1] = ship.getSpeed()[1] + 33*ship.getAcceleration()[1];
 
         acceleration[0] = ship.getAcceleration()[0];
         acceleration[1] = ship.getAcceleration()[1];
 
-        position[0] = ship.getPosX()+acceleration[0]*45+22;
+        position[0] = ship.getPosX()+acceleration[0]*45;
         position[1] = ship.getPosY()+acceleration[1]*45;
 
         anglePosition = ship.getAngle();
@@ -46,4 +46,7 @@ public class Missil implements Serializable {
 
     public float getPosX() {return  position[0];}
     public float getPosY() {return  position[1];}
+
+    public boolean getActive() {return active;}
+    public void setActive(boolean b) {active = b;}
 }

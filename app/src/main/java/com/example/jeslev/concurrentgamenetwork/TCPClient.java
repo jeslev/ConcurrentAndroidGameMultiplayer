@@ -36,13 +36,52 @@ public class TCPClient {
 
     OutputStream oStream;
     ObjectOutputStream ooStream;
-
+    public MySurfaceView mySurfaceView;
 
     InputStream istream;
     ObjectInputStream oistream;
 
+    InetAddress serverAddr;
+    Socket socket;
+
+
+    Container container;
+
     public TCPClient(String ip,OnMessageReceived listener) {
         SERVERIP = ip;
+        mMessageListener = listener;
+    }
+
+    public TCPClient(String ip){
+        SERVERIP = ip;
+
+        try {
+            serverAddr = InetAddress.getByName(SERVERIP);
+            socket = new Socket(serverAddr, SERVERPORT);
+
+            try{
+                oStream = socket.getOutputStream();
+                ooStream = new ObjectOutputStream(oStream);
+                //recibe el mensaje del servidor
+                //in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                istream = socket.getInputStream();
+                oistream = new ObjectInputStream(istream);
+
+                container = (Container)oistream.readObject();
+                //Log.e("TCP", "Envio accion de SERVER " + message.getShip().getAngle());
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public Container getContainer() { return container;}
+
+    public void setMessageReceived(OnMessageReceived listener){
         mMessageListener = listener;
     }
 
@@ -58,7 +97,7 @@ public class TCPClient {
                 ooStream.reset();
                 ooStream.writeObject(message);
                 ooStream.flush();
-                Log.e("TCP", "Envio accion de SERVER " + message.getShip().getAngle());
+                //Log.e("TCP", "Envio accion de SERVER " + message.getShip().getAngle());
             }
         }catch (Exception e) { e.printStackTrace();}
     }
@@ -67,16 +106,16 @@ public class TCPClient {
         mRun = false;
     }
 
+    public void setSurface(MySurfaceView surface){      //noamlr
+        this.mySurfaceView = surface;
+    }
+
     public void run() {
 
         mRun = true;
 
         try {
 
-            InetAddress serverAddr = InetAddress.getByName(SERVERIP);
-            //Log.e("TCP Client", "C: Conectando...");
-
-            Socket socket = new Socket(serverAddr, SERVERPORT);
 
             try {
 
@@ -85,24 +124,20 @@ public class TCPClient {
                 //Log.e("TCP Client", "C: Sent.");
                 //Log.e("TCP Client", "C: Done.");
 
-                oStream = socket.getOutputStream();
-                ooStream = new ObjectOutputStream(oStream);
-                //recibe el mensaje del servidor
-                //in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                istream = socket.getInputStream();
-                oistream = new ObjectInputStream(istream);
+
+                Log.e("TCPClient", "Envio Mensaje");
 
                 //mientras escucha o envia mensajes
                 while (mRun) {
                     //servermsj = in.readLine();
                     Game game = null;
                     game= (Game) oistream.readObject();
-                    Log.e("TCP", ""+game.getShip().getAngle());
+                    Log.e("String ID Spaceship: ", ""+game.idSpaceship);
+                    //Log.e("TCP", ""+game.getShip().getAngle());
                     if (game != null && mMessageListener != null) {
                         //call the method messageReceived from MyActivity class
                         mMessageListener.messageReceived(game);
                     }
-
                 }
 
                 //Log.e("RESPONSE FROM SERVER", "S: Received Message: '" + servermsj + "'");

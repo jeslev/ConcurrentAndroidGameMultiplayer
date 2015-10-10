@@ -1,12 +1,12 @@
     package com.example.jeslev.concurrentgamenetwork;
 
     import android.content.Intent;
-import android.media.MediaPlayer;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+    import android.media.MediaPlayer;
+    import android.os.AsyncTask;
+    import android.os.Bundle;
+    import android.os.StrictMode;
+    import android.support.v7.app.AppCompatActivity;
+    import android.support.v7.widget.Toolbar;
 
 public class ScenarioActivity extends AppCompatActivity {
 
@@ -20,6 +20,9 @@ public class ScenarioActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scenario);
@@ -40,7 +43,10 @@ public class ScenarioActivity extends AppCompatActivity {
         myip = intent.getStringExtra(TAG_IP);
 
 
-        connectTask  = new ConnectTask(myip);
+        tcpClient = new TCPClient(myip);
+
+
+        connectTask  = new ConnectTask();
 
 
         SurfaceViewX = new MySurfaceView(this, tcpClient); // "this" send context of the current class
@@ -57,19 +63,25 @@ public class ScenarioActivity extends AppCompatActivity {
 
 
 
-        public ConnectTask(String ip){
+        public ConnectTask(){
 
-            myip=ip;
 
             //creamos el objeto TCPClient
-            tcpClient = new TCPClient(myip,new TCPClient.OnMessageReceived() {
+//            tcpClient = new TCPClient(myip,new TCPClient.OnMessageReceived() {
+//                @Override
+//                //Utilizamos el metodo de messageReceived(String message) de la interface OnMessageReived
+//                public void messageReceived(Game message) {
+//                    //llama a onProgressUpdate
+//                    publishProgress(message);
+//                }
+//            });
+            tcpClient.setMessageReceived(new TCPClient.OnMessageReceived() {
                 @Override
-                //Utilizamos el metodo de messageReceived(String message) de la interface OnMessageReived
                 public void messageReceived(Game message) {
-                    //llama a onProgressUpdate
                     publishProgress(message);
                 }
             });
+
         }
 
         @Override
@@ -85,7 +97,7 @@ public class ScenarioActivity extends AppCompatActivity {
             //ClienteReciveCoordenadas(values[0]);/////////////////
             //SurfaceViewA.doDraw(holderA,null, 50, 50,0);
             SurfaceViewX.setGame(values[0]);
-            Log.e("TCP", "cliente recibe accion! "+ values[0].getShip().getAngle() );
+            //Log.e("TCP", "cliente recibe accion! "+ values[0].getShip().getAngle() );
 
 
 

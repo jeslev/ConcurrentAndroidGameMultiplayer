@@ -10,6 +10,7 @@ public class Container implements Serializable {
     public Game game;
     int id;
 
+    //Wrapping class, for sending game and ID to client
     public Container(Game game,int id){
         this.game = game;
         this.id = id;

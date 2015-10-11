@@ -1,7 +1,5 @@
 package com.example.jeslev.concurrentgamenetwork;
 
-import android.util.Log;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -10,7 +8,6 @@ import java.util.ArrayList;
  */
 public class Game implements Serializable {
 
-    //static final long serialVersionUID =6439255504987974726L;
     ArrayList<Spaceship> ships;  /*noamlr*/
     ArrayList<Missil> missils;
     int wx, wy;
@@ -30,10 +27,10 @@ public class Game implements Serializable {
     }
 
     public void update(int wx,int wy,float dpx,float mdpx) {
-        this.wx= wx; // = wx;
+        this.wx= wx;
         this.wy= wy;
 
-        Log.e("Spaceship:", "");
+        //Log.e("Spaceship:", "");
 
         for(Spaceship tmpship : ships) tmpship.update(wx, wy);
 
@@ -51,7 +48,7 @@ public class Game implements Serializable {
                 if(tmpShip.getLive() && tmpMissil.getActive() && calculateDistance(sx, sy, mx, my)<mdpx*2){
                     tmpShip.setLive(false);
                     tmpMissil.setActive(false);
-                    Log.e("Colision TM: ", ""+sx+" "+sy+" "+mx+" "+my);
+                    //Log.e("Colision TM: ", ""+sx+" "+sy+" "+mx+" "+my);
                 }
             }
 
@@ -60,11 +57,11 @@ public class Game implements Serializable {
 
                 float s2x = tmpShip2.getPosX();
                 float s2y = tmpShip2.getPosY();
-                if(tmpShip!=tmpShip2)Log.e("Distancia: ", ""+calculateDistance(sx, sy, s2x, s2y));
+                //if(tmpShip!=tmpShip2)Log.e("Distancia: ", ""+calculateDistance(sx, sy, s2x, s2y));
                 if(tmpShip.getLive() && tmpShip2.getLive() && (tmpShip != tmpShip2) && calculateDistance(sx, sy, s2x, s2y)<dpx  ){
                     tmpShip.setLive(false);
                     tmpShip2.setLive(false);
-                    Log.e("Colision TM: ", "" + sx + " " + sy + " " + s2x + " " + s2y);
+                    //Log.e("Colision TM: ", "" + sx + " " + sy + " " + s2x + " " + s2y);
                 }
             }
 
@@ -73,28 +70,20 @@ public class Game implements Serializable {
 
     public void turbo(int id){
         ships.get(id).turbo();
-        //ship.turbo();
     }
 
 
     public void rotateLeft(int id){
         ships.get(id).rotateLeft();
-        //ship.rotateLeft();
     }
 
     public void rotateRight(int id){
         ships.get(id).rotateRight();
-        //ship.rotateRight();
     }
 
     public void noRotate(int id){
         ships.get(id).noRotate();
-        //ship.noRotate();
     }
-
-   /* public boolean getTurbo() {
-        return ship.getTurbo();
-    }*/
 
     public boolean getTurbo(int id) {
         return ships.get(id).getTurbo();
@@ -106,12 +95,10 @@ public class Game implements Serializable {
     }
 
     public void addSpaceship(int id){
-
         ships.add(id, new Spaceship(wx, wy));
         players[id]=true;
     }
 
-    //public Spaceship getShip() { return ship;}
     public Spaceship getShip(int id) { return ships.get(id);}
 
     public ArrayList<Missil> getMissil() { return missils;}
@@ -126,8 +113,6 @@ public class Game implements Serializable {
         this.wx=wx;
         this.wy=wy;
     }
-//    public int findWinner(){
-//        for()
-//    }
+
 
 }

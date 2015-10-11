@@ -1,12 +1,11 @@
     package com.example.jeslev.concurrentgamenetwork;
 
     import android.content.res.AssetFileDescriptor;
-    import android.media.MediaPlayer;
-    import android.os.AsyncTask;
-    import android.os.Bundle;
-    import android.support.v7.app.AppCompatActivity;
-    import android.support.v7.widget.Toolbar;
-    import android.util.Log;
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 public class ScenarioActivity extends AppCompatActivity {
 
@@ -24,14 +23,12 @@ public class ScenarioActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ///*
         try {
             mp.reset();
             AssetFileDescriptor afd;
             afd = getBaseContext().getAssets().openFd("music.mp3");
             mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-            //mp.prepare();
-            //mp.start();
+
             mp.prepareAsync();
             mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener(){
                 @Override
@@ -40,8 +37,6 @@ public class ScenarioActivity extends AppCompatActivity {
                 }
             });
         }catch(Exception e){ e.printStackTrace();}
-        //*/
-
 
         connectTask = new ConnectTask();
 
@@ -84,16 +79,9 @@ public class ScenarioActivity extends AppCompatActivity {
         protected void onProgressUpdate(Container... values) {
             super.onProgressUpdate(values);
 
-            ///////agregar(values[0]);//////////////////////////////////////////
-            //in the arrayList we add the messaged received from server
-            /////arrayList.add(values[0]);
-            // notify the adapter that the data set has changed. This means that new message received
-            // from server was added to the list
-            /////mAdapter.notifyDataSetChanged();
-            Log.e("ID: ", "sdfsdf "+ values[0].getID());
+            //Log.e("ID: ", "sdfsdf "+ values[0].getID());
             SurfaceViewX.setGame(values[0].getGame(), values[0].getID());
-            //ServidorReciveCoordenadas(values[0]);
-            Log.e("TCP", "Servidor recibe coordenadas");
+            //Log.e("TCP", "Servidor recibe coordenadas");
 
         }
 

@@ -2,8 +2,6 @@ package com.example.jeslev.concurrentgamenetwork;
 
 import android.util.Log;
 
-import java.io.BufferedReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -18,15 +16,6 @@ public class TCPServer {
     private OnMessageReceived messageListener = null;
     private boolean running = false;
     public MySurfaceView mySurfaceView;
-    PrintWriter mOut;
-    BufferedReader in;
-
-    //ArrayList<OutputStream> oStream;
-    //ArrayList<ObjectOutputStream> ooStream;
-
-    //ArrayList<InputStream> istream;
-    //ArrayList<ObjectInputStream> oistream;
-
 
     ArrayList<ClientThread> threads;
 
@@ -37,11 +26,6 @@ public class TCPServer {
         this.messageListener = messageListener;
         threads = new ArrayList<ClientThread>();
         id = 0;
-//        oStream = new ArrayList<OutputStream>();
-//        ooStream = new ArrayList<ObjectOutputStream>();
-//
-//        istream = new ArrayList<InputStream>();
-//        oistream = new ArrayList<ObjectInputStream>();
     }
 
     /**
@@ -76,27 +60,19 @@ public class TCPServer {
     }
 
     public void run() {
-        ///////////////////////
         running = true;
 
         try {
-            //here you must put your computer's IP address.
-            //InetAddress serverAddr = InetAddress.getByName(SERVERIP);
-
             ServerSocket serverSocket = new ServerSocket(SERVERPORT);
 
             while(running) {
-                Log.e("TCP Server", "S : Connecting...");
-
-                //create a socket to make the connection with the server
-                //Socket socket = new Socket(serverAddr, SERVERPORT);
-
+                //Log.e("TCP Server", "S : Connecting...");
 
                 //create client socket... the method accept() listens for a connection to be made to this socket and accepts it.
                 Socket client = serverSocket.accept();
 
                 //System.out.println("S: Receiving...");
-                Log.e("TCP Server", "S: Receiving...");
+                //Log.e("TCP Server", "S: Receiving...");
                 id++;
                 ClientThread tmpThread = new ClientThread(client, id, messageListener, this.mySurfaceView);
 

@@ -45,15 +45,13 @@ public class ClientThread extends Thread {
             oStream = socket.getOutputStream();
             ooStream = new ObjectOutputStream(oStream);
 
-            Log.e("TCP Server", "C"+id+": Sent.");
-            Log.e("TCP Server", "C"+id+": Done.");
-
-            //receive the message which the server sends back
-            //in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            //Log.e("TCP Server", "C"+id+": Sent.");
+            //Log.e("TCP Server", "C"+id+": Done.");
 
             istream = socket.getInputStream();
             oistream = new ObjectInputStream(istream);
 
+            //Send to client ID and game state to start playing
             ooStream.reset();
             Game gameTemp = mySurfaceView.getGame();
             gameTemp.addSpaceship(id);
@@ -61,25 +59,21 @@ public class ClientThread extends Thread {
             ooStream.writeObject(new Container(gameTemp,id));
             ooStream.flush();
 
-            Log.e("ClientThread", "envio mensaje");
+            //Log.e("ClientThread", "envio mensaje");
 
             //in this while the client listens for the messages sent by the server
             while (running) {
-    //          message = in.readLine();
+
                 Game game = null;
                 game= (Game) oistream.readObject();
-                //Log.e("TCP", ""+game.getShip().getAngle());
-                Log.e("TCP", ""+id); /*noamlr*/
+
+                //Log.e("TCP", ""+id); /*noamlr*/
                 if (game != null && messageListener != null) {
                     messageListener.messageReceived(game,id);
                 }
-    //          if (message != null && messageListener != null) {
-    //             //call the method messageReceived from MyActivity class
-    //             messageListener.messageReceived(message);
-    //          }
-    //          message = null;
+
             }
-    //                Log.e("RESPONSE FROM CLIENT", "S: Received Message: '" + message + "'");
+
         } catch (Exception e) {
             Log.e("TCP Server", "S: Error", e);
         } finally {
@@ -98,8 +92,7 @@ public class ClientThread extends Thread {
                 ooStream.reset();
                 ooStream.writeObject(message);
                 ooStream.flush();
-                //Log.e("TCP", "Envio accion de SERVER " + message.getShip().getAngle());
-                Log.e("TCP", "Envio accion de SERVER " + message.getShip(id).getAngle()); /*noamlr*/
+                //Log.e("TCP", "Envio accion de SERVER " + message.getShip(id).getAngle()); /*noamlr*/
             }
         }catch (Exception e) { e.printStackTrace();}
     }

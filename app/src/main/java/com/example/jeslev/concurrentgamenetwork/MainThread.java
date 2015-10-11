@@ -38,13 +38,10 @@ public class MainThread extends Thread {
             try{
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder){
-                    //this.surfaceView.update();
-                    //this.surfaceView.doDraw(canvas);
-                    //Log.e("Debug MainThread", "Antes del update");
+
                     this.surfaceView.update();     /*noamlr*/
-                    //Log.e("Debug MainThread", "Entre el update y doDraw");
                     this.surfaceView.doDraw(canvas); /*noamlr*/
-                    //Log.e("Debug MainThread", "Despues del doDraw");
+
                 }
             }catch(Exception e){}
             finally {

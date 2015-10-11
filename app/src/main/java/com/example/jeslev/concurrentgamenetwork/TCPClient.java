@@ -2,12 +2,10 @@ package com.example.jeslev.concurrentgamenetwork;
 
 import android.util.Log;
 
-import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 
@@ -18,21 +16,12 @@ public class TCPClient {
 
     private String servermsj;
 
-    public  String SERVERIP;// = "192.168.2.9"; //your computer IP address
-    //public  String SERVERIP = "192.168.2.9"; //your computer IP address
-
-    //public int SERVERPORT = 4444;
-
-    //public static final String SERVERIP = "192.168.2.9"; //your computer IP address
+    public  String SERVERIP;// your computer IP address
 
     public static final int SERVERPORT = 4444;
 
-
     private OnMessageReceived mMessageListener = null;
-    private boolean mRun = false;
-
-    PrintWriter out;
-    BufferedReader in;
+    private  boolean mRun = false;
 
     OutputStream oStream;
     ObjectOutputStream ooStream;
@@ -44,13 +33,7 @@ public class TCPClient {
     InetAddress serverAddr;
     Socket socket;
 
-
     Container container;
-
-    public TCPClient(String ip,OnMessageReceived listener) {
-        SERVERIP = ip;
-        mMessageListener = listener;
-    }
 
     public TCPClient(String ip){
         SERVERIP = ip;
@@ -62,13 +45,12 @@ public class TCPClient {
             try{
                 oStream = socket.getOutputStream();
                 ooStream = new ObjectOutputStream(oStream);
-                //recibe el mensaje del servidor
-                //in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
                 istream = socket.getInputStream();
                 oistream = new ObjectInputStream(istream);
 
                 container = (Container)oistream.readObject();
-                Log.e("TCP", "Recibi ID" );
+                //Log.e("TCP", "Recibi ID" );
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -87,12 +69,6 @@ public class TCPClient {
         mMessageListener = listener;
     }
 
-//    public void sendMessage(String message){
-//        if (out != null && !out.checkError()) {
-//            out.println(message);
-//            out.flush();
-//        }
-//    }
     public synchronized void sendMessage(Game message){
         try {
             if (ooStream != null) {
@@ -117,32 +93,20 @@ public class TCPClient {
         mRun = true;
 
         try {
-
-
             try {
 
-                //envio de mensaje al servidor
-                //out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-                //Log.e("TCP Client", "C: Sent.");
-                //Log.e("TCP Client", "C: Done.");
+                //Log.e("TCPClient", "Envio Mensaje");
 
-
-                Log.e("TCPClient", "Envio Mensaje");
-
-                //mientras escucha o envia mensajes
                 while (mRun) {
-                    //servermsj = in.readLine();
                     Game game = null;
                     game= (Game) oistream.readObject();
-                    Log.e("String ID Spaceship: ", ""+game.idSpaceship);
+                    //Log.e("String ID Spaceship: ", ""+game.idSpaceship);
                     //Log.e("TCP", ""+game.getShip().getAngle());
                     if (game != null && mMessageListener != null) {
                         //call the method messageReceived from MyActivity class
                         mMessageListener.messageReceived(game);
                     }
                 }
-
-                //Log.e("RESPONSE FROM SERVER", "S: Received Message: '" + servermsj + "'");
 
             } catch (Exception e) {
 
@@ -154,7 +118,7 @@ public class TCPClient {
             }
 
         } catch (Exception e) {
-            //Log.e("TCP", "C: Error", e);
+            Log.e("TCP", "C: Error", e);
         }
 
     }

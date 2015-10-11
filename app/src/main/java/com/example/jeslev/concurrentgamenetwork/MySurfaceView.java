@@ -25,7 +25,6 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     private final Paint paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint paint3 = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private final Paint paintServer = new Paint(Paint.ANTI_ALIAS_FLAG);
     int xx = 100;
     int yy = 150;
 
@@ -51,15 +50,15 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
         this.tcpClient = tcpClient;
         this.tcpClient.setSurface(this);
-        //focusable to get touch events
         idClient = this.tcpClient.getContainer().getID();
         game = this.tcpClient.getContainer().getGame();
 
-        Log.e("Game Live: ", ""+idClient);
+        //Log.e("Game Live: ", ""+idClient);
         game.getShip(idClient).setLiveVisible(true);
 
-        //game.addSpaceship(0);
         thread = new MainThread(getHolder(), this);
+
+        //focusable to get touch events
         setFocusable(true);
 
         shipsDrawOn[1] = BitmapFactory.decodeResource(getResources(),
@@ -91,10 +90,6 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         paint3.setTypeface(Typeface.create(paint3.getTypeface(), Typeface.BOLD));
         paint3.setStyle(Paint.Style.FILL);
 
-
-        paintServer.setColor(Color.GRAY);
-        paintServer.setStyle(Paint.Style.FILL);
-
         playingVisible=true;
         playing = true;
 
@@ -122,26 +117,11 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-//			Canvas canvas = holder.lockCanvas();
-//			canvas.drawColor(Color.GRAY);
-//			canvas.drawCircle(100, 150, 30, paint2);
-
         //start the game loop
         game.setWXY(getWidth(), getHeight() );
         thread.setRunning(true);
         thread.start();
-
-        //int x = 100;
-        //int y = 100;
-        //doDraw(holder,bitmapOff, x, y,1);
     }
-
-     /*public void ServidorEnviarCoordenadas(){
-        if (mTcpServer != null) {
-            //textmp = edt_mensaje.getText().toString();
-            mTcpServer.sendMessage(xx + " "+yy);
-        }
-    }*/
 
     public void updateToServer(){
         if(tcpClient!=null){
@@ -154,7 +134,6 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     public synchronized void setGame(Game tmp){
         game=tmp;
-        //updateToServer();
     }
 
     @Override
@@ -165,31 +144,17 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         int wx = getWidth();
         int wy = getHeight();
 
-        //ServidorEnviarCoordenadas();
-
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 updateState(event.getX(), event.getY(), wx, wy, this.idClient);
-                //if(game.getTurbo())
-                //    doDraw(getHolder(),bitmapOn, (int)event.getX(), (int)event.getY(),1);
-                //else
-                //    doDraw(getHolder(),bitmapOff, (int)event.getX(), (int)event.getY(),1);
-                //Log.d("TouchEvent", "getAction()" + "ACTION_DOWN");
                 break;
             case MotionEvent.ACTION_UP:
                 updateState(event.getX(), event.getY(), wx, wy,false, this.idClient);
-            //    doDraw(getHolder(),bitmapOff, (int)event.getX(), (int)event.getY(),1);
-            //Log.d("TouchEvent", "getAction()" + "ACTION_UP");
                 break;
             case MotionEvent.ACTION_MOVE:
-                //Log.d("TouchEvent", "getAction()" + "ACTION_MOVE");
-                //updateState(event.getX(), event.getY(), wx, wy);
-                //doDraw(getHolder(),bitmapOff  , (int)event.getX(), (int)event.getY(),1);
                 break;
             case MotionEvent.ACTION_CANCEL:
                 updateState(event.getX(), event.getY(), wx, wy,false, this.idClient);
-            //Log.d("TouchEvent", "getAction()" + "ACTION_CANCEL");
-            //     doDraw(getHolder(),bitmapOff, (int)event.getX(), (int)event.getY(),1);
                 break;
         }
 
@@ -199,53 +164,33 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void updateState(float x,float y,int wx,int wy, int id){
-        //System.out.println("TouchEvent111"+"X:" + event.getX() + ",Y:" + event.getY());
         if( 70 < x && x<130 && (wy-180)< y && y<(wy-120) ){
-            //Toast.makeText(getApplicationContext(), "click ARRIBA", Toast.LENGTH_SHORT).show();
-            //System.out.println(" Click ARRIBA");
             game.rotateRight(id);
             updateToServer();
-            //yy = yy - 5;
         }
 
         if( 70 < x && x<130 && (wy-80)<y && y<(wy-20) ){
-            //Toast.makeText(getApplicationContext(), "click ABAJO", Toast.LENGTH_SHORT).show();
-            //System.out.println(" Click ABAJO");
             game.rotateLeft(id);
             updateToServer();
-            //yy = yy  + 5;
         }
 
         if( 20 < x && x<80 && (wy-130)< y && y<(wy-70) ){
-            //Toast.makeText(getApplicationContext(), "click IZQUI", Toast.LENGTH_SHORT).show();
-            //System.out.println(" Click IZQUIERDA");
             game.rotateRight(id);
             updateToServer();
-            //xx = xx  - 5;
         }
 
         if( 120 < x && x<180 && (wy-130)<y && y<(wy-70) ){
-            //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
-            //System.out.println(" Click DERECHA");
             game.rotateLeft(id);
             updateToServer();
-            //xx = xx  + 5;
         }
 
         if( (wx-180) < x && x<(wx-120) && (wy-180)< y && y<(wy-120) ){
-            //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
-            //System.out.println(" Click A");
             game.turbo(id);
             game.noRotate(id);
             updateToServer();
-            //xx = xx  + 5;
         }
 
         if( (wx-180) < x && x<(wx-120) && (wy-80)< y && y<(wy-20) ){
-            //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
-            //System.out.println(" Click B");
-            //xx = xx  + 5;
-
             game.shot(id);
             updateToServer();
         }
@@ -253,56 +198,35 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void updateState(float x,float y,int wx,int wy,boolean stop, int id){
-        //System.out.println("TouchEvent111"+"X:" + event.getX() + ",Y:" + event.getY());
         if( 70 < x && x<130 && (wy-180)< y && y<(wy-120) ){
-            //Toast.makeText(getApplicationContext(), "click ARRIBA", Toast.LENGTH_SHORT).show();
-            //System.out.println(" Click ARRIBA");
             game.noRotate(id);
             updateToServer();
-            //yy = yy - 5;
         }
 
         if( 70 < x && x<130 && (wy-80)<y && y<(wy-20) ){
-            //Toast.makeText(getApplicationContext(), "click ABAJO", Toast.LENGTH_SHORT).show();
-            //System.out.println(" Click ABAJO");
             game.noRotate(id);
             updateToServer();
-            //yy = yy  + 5;
         }
 
         if( 20 < x && x<80 && (wy-130)< y && y<(wy-70) ){
-            //Toast.makeText(getApplicationContext(), "click IZQUI", Toast.LENGTH_SHORT).show();
-            //System.out.println(" Click IZQUIERDA");
             game.noRotate(id);
             updateToServer();
-            //xx = xx  - 5;
         }
 
         if( 120 < x && x<180 && (wy-130)<y && y<(wy-70) ){
-            //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
-            //System.out.println(" Click DERECHA");
             game.noRotate(id);
             updateToServer();
-            //xx = xx  + 5;
         }
 
         if( (wx-180) < x && x<(wx-120) && (wy-180)< y && y<(wy-120) ){
-            //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
-            //System.out.println(" Click A");
-            //game.turbo(0);
             game.noRotate(id);
             updateToServer();
-            //xx = xx  + 5;
         }
 
         if( (wx-180) < x && x<(wx-120) && (wy-80)< y && y<(wy-20) ){
-            //Toast.makeText(getApplicationContext(), "click DER", Toast.LENGTH_SHORT).show();
-            //System.out.println(" Click B");
-            //xx = xx  + 5;
         }
 
     }
-    // Surfaceが作られた時呼び出される
 
 
     public void update(){
@@ -312,19 +236,9 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     };
 
 
-//    public void repintar(){
-//
-////			xx = xx__;
-////			yy = yy__;
-//       // doDraw(getHolder(),bitmapOff, 66, 66,0);
-//
-//
-//    }
-
     public void doDraw(Canvas canvas) { /*noamlr se le agregó el id*/
 
         //Log.e("draw","init draw "+id );
-        //canvas.drawColor(Color.GRAY);
         int wx = getWidth();
         int wy = getHeight();
 
@@ -332,17 +246,10 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         float scale = (float) background.getHeight() / (float) getHeight();
         int newWidth = Math.round(background.getWidth() / scale);
         int newHeight = Math.round(background.getHeight() / scale);
-        //scaled = Bitmap.createScaledBitmap(background, newWidth, newHeight, true);
+
         scaled = Bitmap.createScaledBitmap(background, wx, wy, true);
 
         canvas.drawBitmap(scaled, 0, 0, null);
-        //Log.e("draw", "draw bg " + id);
-        //XYPosition pos = null;
-
-        //if (flat == 1){
-        //    pos = imageXYposition(canvas, bitmap, new XYPosition(centerX,centerY));
-        //}
-        //System.out.println("wx: " + wx + ",wy: "+wy);
 
         if(playingVisible && playing) {
             canvas.drawCircle(100, wy - 150, 30, paint2); // up arrow
@@ -366,12 +273,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         }else{
             canvas.drawText("Te reventaron!", 100,wy-100,paint3);
         }
-        //canvas.drawRect(xx, yy, xx+10, yy+10, paint3);
-        //canvas.drawText("Envio FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF  x=" + xx + " y=" + yy, 50, 10,paintServer);
 
-        //if (flat == 1){
-        //    canvas.drawBitmap(bitmap, pos.getX(), pos.getY(), null);
-        //}
 
         dpx = convertPixelsToDp(43.0f,context)/2.0f;
         dpy = convertPixelsToDp(40.0f,context)/2.0f;
@@ -382,27 +284,21 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             if(!ship.getLiveVisible()) continue;
             if(ship.getTurbo()){ //noamlr
                 Matrix matrix = new Matrix();
-                //matrix.postRotate((float)ship.getAngle());
-                //matrix.postRotate(game.getShip().getAngle(), 14, 19);
-                //matrix.postTranslate(game.getShip().getPosX(), game.getShip().getPosY());
 
                 matrix.postRotate(ship.getAngle(), dpx, dpy); //noamlr
                 matrix.postTranslate((float) (ship.getPosX() - dpx), ship.getPosY() - dpy); //noamlr
 
                 canvas.drawBitmap(shipsDrawOn[cnt], matrix, null);
-                canvas.drawCircle(ship.getPosX(), ship.getPosY(), 10, paint3);
+                //canvas.drawCircle(ship.getPosX(), ship.getPosY(), 10, paint3);
                 //System.err.println(ship.getPosX() + " " + ship.getPosY() + " " + ship.getAngle());
 
             }else{
                 Matrix matrix = new Matrix();
-                //matrix.postRotate((float)ship.getAngle());
-                //matrix.postRotate(game.getShip().getAngle(), 14, 19);
-                //matrix.postTranslate(game.getShip().getPosX(), game.getShip().getPosY());
 
                 matrix.postRotate(ship.getAngle(), dpx, dpy); /*noamlr*/
                 matrix.postTranslate((float) (ship.getPosX() - dpx), ship.getPosY() - dpy); //noamlr
                 canvas.drawBitmap(shipsDrawOff[cnt], matrix, null);
-                canvas.drawCircle(ship.getPosX(), ship.getPosY(), 10, paint3);
+                //canvas.drawCircle(ship.getPosX(), ship.getPosY(), 10, paint3);
                 //System.err.println(ship.getPosX() + " " + ship.getPosY() + " " + ship.getAngle())
             }
         }
@@ -417,7 +313,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             matrix.postRotate(tmpmissil.getAnglePosition(), mdpx, mdpy);
             matrix.postTranslate(tmpmissil.getPosX() - mdpx, tmpmissil.getPosY() - mdpy);
             canvas.drawBitmap(bitmapMissil, matrix, null);
-            canvas.drawCircle(tmpmissil.getPosX(), tmpmissil.getPosY(), 6, paint3);
+            //canvas.drawCircle(tmpmissil.getPosX(), tmpmissil.getPosY(), 6, paint3);
         }
     }
 

@@ -30,7 +30,6 @@ import android.support.v7.widget.Toolbar;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ///*
         try {
             mp.reset();
             AssetFileDescriptor afd;
@@ -43,9 +42,7 @@ import android.support.v7.widget.Toolbar;
                      mp.start();
                  }
             });
-            //mp.start();
         }catch(Exception e){ e.printStackTrace();}
-        //*/
 
         Intent intent = getIntent();
 
@@ -55,9 +52,6 @@ import android.support.v7.widget.Toolbar;
 
 
         SurfaceViewX = new MySurfaceView(this, tcpClient); // "this" send context of the current class
-        //Log.e("ScenarioActivity ID: ", ""+SurfaceViewX.getId());
-        //Log.e("ScenarioActivity ID: ", ""+MainActivity.);
-        //SurfaceViewX.game.getShip(SurfaceViewX.getId()).setLive(true);
         setContentView(SurfaceViewX);
         connectTask.execute("");
 
@@ -65,23 +59,19 @@ import android.support.v7.widget.Toolbar;
     }
 
 
+    @Override
+    protected void onStop(){
+        super.onStop();
+        tcpClient.stopClient();
+    }
+
     public class ConnectTask extends AsyncTask<String,Game,TCPClient> {
         String myip;
 
 
 
         public ConnectTask(){
-
-
             //creamos el objeto TCPClient
-//            tcpClient = new TCPClient(myip,new TCPClient.OnMessageReceived() {
-//                @Override
-//                //Utilizamos el metodo de messageReceived(String message) de la interface OnMessageReived
-//                public void messageReceived(Game message) {
-//                    //llama a onProgressUpdate
-//                    publishProgress(message);
-//                }
-//            });
             tcpClient.setMessageReceived(new TCPClient.OnMessageReceived() {
                 @Override
                 public void messageReceived(Game message) {
@@ -93,7 +83,6 @@ import android.support.v7.widget.Toolbar;
 
         @Override
         protected TCPClient doInBackground(String... message) {
-
             tcpClient.run();
             return null;
         }
@@ -101,13 +90,7 @@ import android.support.v7.widget.Toolbar;
         @Override
         protected synchronized  void onProgressUpdate(Game... values) {
             super.onProgressUpdate(values);
-            //ClienteReciveCoordenadas(values[0]);/////////////////
-            //SurfaceViewA.doDraw(holderA,null, 50, 50,0);
             SurfaceViewX.setGame(values[0]);
-            //Log.e("TCP", "cliente recibe accion! "+ values[0].getShip().getAngle() );
-
-
-
         }
     }
 

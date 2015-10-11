@@ -29,9 +29,16 @@ public class ScenarioActivity extends AppCompatActivity {
             mp.reset();
             AssetFileDescriptor afd;
             afd = getBaseContext().getAssets().openFd("music.mp3");
-            mp.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
-            mp.prepare();
-            mp.start();
+            mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            //mp.prepare();
+            //mp.start();
+            mp.prepareAsync();
+            mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener(){
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer){
+                    mp.start();
+                }
+            });
         }catch(Exception e){ e.printStackTrace();}
         //*/
 

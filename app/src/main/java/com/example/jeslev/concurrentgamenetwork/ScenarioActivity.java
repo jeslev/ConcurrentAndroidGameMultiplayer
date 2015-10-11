@@ -63,6 +63,13 @@ import android.support.v7.widget.Toolbar;
     protected void onStop(){
         super.onStop();
         tcpClient.stopClient();
+        mp.stop();
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        mp.stop();
     }
 
     public class ConnectTask extends AsyncTask<String,Game,TCPClient> {

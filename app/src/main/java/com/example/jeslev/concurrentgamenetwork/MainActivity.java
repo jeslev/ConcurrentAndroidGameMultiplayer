@@ -8,13 +8,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
-import static android.view.View.*;
+import static android.view.View.OnClickListener;
 
 public class MainActivity extends AppCompatActivity {
 
     Button startButton;
 
+    ImageView image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         startButton = (Button) findViewById(R.id.startButton);
+        image = (ImageView) findViewById(R.id.imageView);
+
+        image.setImageResource(R.drawable.spaceship3);
 
         startButton.setOnClickListener(new OnClickListener(){
             @Override

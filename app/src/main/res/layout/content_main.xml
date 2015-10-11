@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="(Nombre)"
+        android:text="Navecitas"
         android:id="@+id/labelPlayerName"
         android:layout_below="@+id/gameTitle"
         android:layout_centerHorizontal="true" />
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="(Estado servidor)"
+        android:text="Servidor disponible"
         android:id="@+id/labelState"
         android:layout_below="@+id/labelPlayerName"
         android:layout_centerHorizontal="true"
@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="(nombre)"
+            android:text="Jugador 0"
             android:layout_weight="1.0"
             android:id="@+id/labelPlayerName2" />
 

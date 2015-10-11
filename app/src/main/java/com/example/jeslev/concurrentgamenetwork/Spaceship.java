@@ -20,13 +20,14 @@ public class Spaceship implements Serializable {
     private boolean turnon;
     private int boundarieX, boundarieY;
 
-    private boolean live;
+    private boolean live,active;
 
     public Spaceship(int wx, int wy){
         anglePosition = 270;
         angleSpeed = 0.0f;
         turnon = false;
         live = true;
+        active=false;
         Random rand = new Random();
         position[0] = rand.nextInt(wx-200) + 100;
         position[1] = rand.nextInt(wy-200) + 100;
@@ -74,14 +75,17 @@ public class Spaceship implements Serializable {
 
     public void rotateLeft(){
         angleSpeed = 12.0f;
+        active = true;
     }
 
     public void rotateRight(){
         angleSpeed = -12.0f;
+        active = true;
     }
 
-    public void noRotate(){
+     public void noRotate(){
         angleSpeed = 0.0f;
+         active = true;
     }
 
     public float getPosX(){ return position[0];}
@@ -97,4 +101,8 @@ public class Spaceship implements Serializable {
     public void setLive(boolean b) {live = b;}
 
     public boolean getLive() {return live;}
+
+    //Vars to identify if player is playing already
+    public void setActive(boolean b) {active=b;}
+    public boolean getActive() { return active;}
 }

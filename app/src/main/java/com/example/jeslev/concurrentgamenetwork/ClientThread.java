@@ -57,6 +57,7 @@ public class ClientThread extends Thread {
             ooStream.reset();
             Game gameTemp = mySurfaceView.getGame();
             gameTemp.addSpaceship(id);
+            gameTemp.getShip(id).setLiveVisible(false);
             ooStream.writeObject(new Container(gameTemp,id));
             ooStream.flush();
 

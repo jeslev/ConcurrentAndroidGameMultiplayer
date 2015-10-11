@@ -48,7 +48,7 @@ public class Game implements Serializable {
             for(Missil tmpMissil : missils){
                 float mx = tmpMissil.getPosX();
                 float my = tmpMissil.getPosY();
-                if(tmpShip.getLive() && tmpMissil.getActive() && calculateDistance(sx, sy, mx, my)<mdpx){
+                if(tmpShip.getLive() && tmpMissil.getActive() && calculateDistance(sx, sy, mx, my)<mdpx*2){
                     tmpShip.setLive(false);
                     tmpMissil.setActive(false);
                     Log.e("Colision TM: ", ""+sx+" "+sy+" "+mx+" "+my);

@@ -1,11 +1,12 @@
     package com.example.jeslev.concurrentgamenetwork;
 
-import android.media.MediaPlayer;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+    import android.content.res.AssetFileDescriptor;
+    import android.media.MediaPlayer;
+    import android.os.AsyncTask;
+    import android.os.Bundle;
+    import android.support.v7.app.AppCompatActivity;
+    import android.support.v7.widget.Toolbar;
+    import android.util.Log;
 
 public class ScenarioActivity extends AppCompatActivity {
 
@@ -23,7 +24,8 @@ public class ScenarioActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*try {
+        ///*
+        try {
             mp.reset();
             AssetFileDescriptor afd;
             afd = getBaseContext().getAssets().openFd("music.mp3");
@@ -31,7 +33,7 @@ public class ScenarioActivity extends AppCompatActivity {
             mp.prepare();
             mp.start();
         }catch(Exception e){ e.printStackTrace();}
-        */
+        //*/
 
 
         connectTask = new ConnectTask();

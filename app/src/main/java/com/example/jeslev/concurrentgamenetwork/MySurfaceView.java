@@ -29,7 +29,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     int xx = 100;
     int yy = 150;
 
-    public boolean playing;
+    public boolean playingVisible, playing;
 
     private MainThread thread;
     TCPClient tcpClient;
@@ -54,6 +54,9 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         //focusable to get touch events
         idClient = this.tcpClient.getContainer().getID();
         game = this.tcpClient.getContainer().getGame();
+
+        Log.e("Game Live: ", ""+idClient);
+        game.getShip(idClient).setLiveVisible(true);
 
         //game.addSpaceship(0);
         thread = new MainThread(getHolder(), this);
@@ -92,7 +95,8 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         paintServer.setColor(Color.GRAY);
         paintServer.setStyle(Paint.Style.FILL);
 
-        playing=true;
+        playingVisible=true;
+        playing = true;
 
         dpx = convertPixelsToDp(43.0f,context)/2.0f;
         dpy = convertPixelsToDp(40.0f,context)/2.0f;
@@ -156,7 +160,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        if(!playing) return true;
+        if(!playingVisible) return true;
 
         int wx = getWidth();
         int wy = getHeight();
@@ -303,6 +307,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     public void update(){
         game.update(getWidth(), getHeight(),dpx,mdpx);
+        playingVisible = game.getShips().get(idClient).getLiveVisible();
         playing = game.getShips().get(idClient).getLive();
     };
 
@@ -339,7 +344,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         //}
         //System.out.println("wx: " + wx + ",wy: "+wy);
 
-        if(playing) {
+        if(playingVisible && playing) {
             canvas.drawCircle(100, wy - 150, 30, paint2); // up arrow
 
             canvas.drawCircle(100, wy - 50, 30, paint2); // down arrow
@@ -351,8 +356,15 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             canvas.drawCircle(wx - 150, wy - 150, 30, paint2); // a button
 
             canvas.drawCircle(wx - 150, wy - 50, 30, paint2); // b button
+            if(game.getShips().size()>1){
+                int cntPlaying = 0;
+                for(Spaceship tmpShip : game.getShips()){
+                    if(tmpShip.getLive()) cntPlaying++;
+                }
+                if(cntPlaying==1)   canvas.drawText("Ganaste!", 100,100,paint3);
+            }
         }else{
-            canvas.drawText("Game Over!", 100,wy-100,paint3);
+            canvas.drawText("Te reventaron!", 100,wy-100,paint3);
         }
         //canvas.drawRect(xx, yy, xx+10, yy+10, paint3);
         //canvas.drawText("Envio FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF  x=" + xx + " y=" + yy, 50, 10,paintServer);
@@ -367,7 +379,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         int cnt = -1;
         for(Spaceship ship : game.getShips()){
             cnt++;
-            if(!ship.getLive()) continue;
+            if(!ship.getLiveVisible()) continue;
             if(ship.getTurbo()){ //noamlr
                 Matrix matrix = new Matrix();
                 //matrix.postRotate((float)ship.getAngle());

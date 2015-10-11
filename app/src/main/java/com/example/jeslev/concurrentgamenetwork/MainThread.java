@@ -45,22 +45,16 @@ public class MainThread extends Thread {
                     //Log.e("Debug MainThread", "Entre el update y doDraw");
                     this.surfaceView.doDraw(canvas); /*noamlr*/
                     //Log.e("Debug MainThread", "Despues del doDraw");
-
                 }
-
             }catch(Exception e){}
             finally {
                 if(canvas!=null){
                     try{ surfaceHolder.unlockCanvasAndPost(canvas);
                     }catch(Exception e){ e.printStackTrace();}
                 }
-
             }
-
-
             timeMillis = (System.nanoTime()-startTime)/ 1000000;
             waitTime = targetTime - timeMillis;
-
             //wait to fill 30 ms
             try{
                 this.sleep(waitTime);

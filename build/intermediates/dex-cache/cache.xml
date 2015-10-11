@@ -2,39 +2,39 @@
 <items version="2" >
 
     <item
-        jar="/home/yarvis/Documents/Concurrente152/ConcurrentAndroidMultiplayerClient/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="/home/yarvis/Documents/Concurrente152/ConcurrentAndroidMultiplayerClient/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-3dfbf972ffe313c193ec590d7385cbed7652f3fa.jar" />
-    </item>
-    <item
-        jar="/home/yarvis/Documents/Concurrente152/ConcurrentAndroidMultiplayerClient/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
+        jar="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentClient/ConcurrentAndroidGameMultiplayer/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="/home/yarvis/Documents/Concurrente152/ConcurrentAndroidMultiplayerClient/app/build/intermediates/pre-dexed/debug/classes-6d381333a605e993d82798d03705352992d3b9b9.jar" />
+        <dex dex="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentClient/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/classes-b74046723e1d07b50bc58859af28a0f9cdc9e9fe.jar" />
     </item>
     <item
-        jar="/home/yarvis/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
+        jar="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentClient/ConcurrentAndroidGameMultiplayer/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="/home/yarvis/Documents/Concurrente152/ConcurrentAndroidMultiplayerClient/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1-007cf587556980eabce40bb298147aad5966974d.jar" />
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentClient/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-d8dbf7d8805d31e02c2e5739b1a9d93c5be0858e.jar" />
     </item>
     <item
-        jar="/home/yarvis/Documents/Concurrente152/ConcurrentAndroidMultiplayerClient/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
+        jar="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentClient/ConcurrentAndroidGameMultiplayer/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="/home/yarvis/Documents/Concurrente152/ConcurrentAndroidMultiplayerClient/app/build/intermediates/pre-dexed/debug/classes-34fc71939a5136ae96e236b24d695eee4a1b4240.jar" />
+        <dex dex="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentClient/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/classes-338334625a3dc78516cc9033a3493fe2b2393555.jar" />
     </item>
     <item
-        jar="/home/yarvis/Documents/Concurrente152/ConcurrentAndroidMultiplayerClient/app/build/intermediates/exploded-aar/com.android.support/design/23.0.1/jars/classes.jar"
+        jar="/home/noa/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentClient/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1-041a1418fe6de26f03569470a683aedbd7aa6097.jar" />
+    </item>
+    <item
+        jar="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentClient/ConcurrentAndroidGameMultiplayer/app/build/intermediates/exploded-aar/com.android.support/design/23.0.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
-        <dex dex="/home/yarvis/Documents/Concurrente152/ConcurrentAndroidMultiplayerClient/app/build/intermediates/pre-dexed/debug/classes-f5583a734a4d71f1a8168a2d5a50e6e29ef25e0e.jar" />
+        <dex dex="/home/noa/Documents/ONLINE_COURSES/APP_GOOGLE/ConcurrentClient/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/classes-4368b169ee3b56f4d2df74ce26cf079b4d3ad81c.jar" />
     </item>
 
 </items>

@@ -1,14 +1,15 @@
     package com.example.jeslev.concurrentgamenetwork;
 
     import android.content.Intent;
+    import android.content.res.AssetFileDescriptor;
     import android.media.MediaPlayer;
-    import android.os.AsyncTask;
-    import android.os.Bundle;
-    import android.os.StrictMode;
-    import android.support.v7.app.AppCompatActivity;
-    import android.support.v7.widget.Toolbar;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
-public class ScenarioActivity extends AppCompatActivity {
+    public class ScenarioActivity extends AppCompatActivity {
 
     public MySurfaceView SurfaceViewX;
     final MediaPlayer mp = new MediaPlayer();
@@ -29,7 +30,8 @@ public class ScenarioActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*try {
+        ///*
+        try {
             mp.reset();
             AssetFileDescriptor afd;
             afd = getBaseContext().getAssets().openFd("music.mp3");
@@ -37,7 +39,7 @@ public class ScenarioActivity extends AppCompatActivity {
             mp.prepare();
             mp.start();
         }catch(Exception e){ e.printStackTrace();}
-        */
+        //*/
 
         Intent intent = getIntent();
 
@@ -47,7 +49,9 @@ public class ScenarioActivity extends AppCompatActivity {
 
 
         SurfaceViewX = new MySurfaceView(this, tcpClient); // "this" send context of the current class
-
+        //Log.e("ScenarioActivity ID: ", ""+SurfaceViewX.getId());
+        //Log.e("ScenarioActivity ID: ", ""+MainActivity.);
+        //SurfaceViewX.game.getShip(SurfaceViewX.getId()).setLive(true);
         setContentView(SurfaceViewX);
         connectTask.execute("");
 

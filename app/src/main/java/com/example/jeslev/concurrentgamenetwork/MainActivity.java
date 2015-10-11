@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView image;
 
     String TAG_SOCKET = "socket";
-    int idClient;
+    public int idClient;
     public static TCPClient tcpClient;
 
     @Override
@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
             state.setText("Conectado");
             if(idClient==1) image.setImageResource(R.drawable.spaceship);
             if(idClient==2) image.setImageResource(R.drawable.spaceship);
+            if(idClient==3) image.setImageResource(R.drawable.spaceship);
         }
 
         @Override

@@ -48,8 +48,9 @@ public class Game implements Serializable {
             for(Missil tmpMissil : missils){
                 float mx = tmpMissil.getPosX();
                 float my = tmpMissil.getPosY();
-                if(tmpShip.getLive() && tmpMissil.getActive() && calculateDistance(sx, sy, mx, my)<mdpx){
+                if(tmpShip.getLiveVisible() && tmpMissil.getActive() && calculateDistance(sx, sy, mx, my)<mdpx*2){
                     tmpShip.setLive(false);
+                    tmpShip.setLiveVisible(false);
                     tmpMissil.setActive(false);
                     Log.e("Colision TM: ", ""+sx+" "+sy+" "+mx+" "+my);
                 }
@@ -61,8 +62,10 @@ public class Game implements Serializable {
                 float s2x = tmpShip2.getPosX();
                 float s2y = tmpShip2.getPosY();
                 if(tmpShip!=tmpShip2)Log.e("Distancia: ", ""+calculateDistance(sx, sy, s2x, s2y));
-                if(tmpShip.getLive() && tmpShip2.getLive() && (tmpShip != tmpShip2) && calculateDistance(sx, sy, s2x, s2y)<dpx  ){
+                if(tmpShip.getLive() && tmpShip2.getLiveVisible() && (tmpShip != tmpShip2) && calculateDistance(sx, sy, s2x, s2y)<dpx  ){
+                    tmpShip.setLiveVisible(false);
                     tmpShip.setLive(false);
+                    tmpShip2.setLiveVisible(false);
                     tmpShip2.setLive(false);
                     Log.e("Colision TM: ", "" + sx + " " + sy + " " + s2x + " " + s2y);
                 }

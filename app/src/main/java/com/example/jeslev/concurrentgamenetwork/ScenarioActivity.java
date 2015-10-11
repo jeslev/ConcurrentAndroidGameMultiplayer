@@ -50,6 +50,17 @@ public class ScenarioActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStop(){
+        super.onStop();
+        mp.stop();
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        mp.stop();
+    }
 
 
     public class ConnectTask extends AsyncTask<String, Container, TCPServer> {

@@ -68,7 +68,7 @@ public class TCPClient {
                 oistream = new ObjectInputStream(istream);
 
                 container = (Container)oistream.readObject();
-                //Log.e("TCP", "Envio accion de SERVER " + message.getShip().getAngle());
+                Log.e("TCP", "Recibi ID" );
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -78,6 +78,8 @@ public class TCPClient {
             e.printStackTrace();
         }
     }
+
+
 
     public Container getContainer() { return container;}
 

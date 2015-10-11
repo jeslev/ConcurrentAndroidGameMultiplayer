@@ -13,7 +13,7 @@ public class ScenarioActivity extends AppCompatActivity {
     public MySurfaceView SurfaceViewX;
     final MediaPlayer mp = new MediaPlayer();
     ConnectTask connectTask;
-    String TAG_IP = "ip";
+    String TAG_SOCKET = "socket";
     String myip = "";
 
     public TCPClient tcpClient;
@@ -40,11 +40,8 @@ public class ScenarioActivity extends AppCompatActivity {
         */
 
         Intent intent = getIntent();
-        myip = intent.getStringExtra(TAG_IP);
 
-
-        tcpClient = new TCPClient(myip);
-
+        tcpClient = MainActivity.tcpClient;
 
         connectTask  = new ConnectTask();
 

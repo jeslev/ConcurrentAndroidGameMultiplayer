@@ -41,6 +41,8 @@ public class Game implements Serializable {
 
         //check colissions
         for(Spaceship tmpShip : ships){
+            if(!tmpShip.getActive()) continue;
+
             float sx = tmpShip.getPosX();
             float sy = tmpShip.getPosY();
             for(Missil tmpMissil : missils){
@@ -54,6 +56,8 @@ public class Game implements Serializable {
             }
 
             for(Spaceship tmpShip2 : ships){
+                if(!tmpShip2.getActive()) continue;
+
                 float s2x = tmpShip2.getPosX();
                 float s2y = tmpShip2.getPosY();
                 if(tmpShip!=tmpShip2)Log.e("Distancia: ", ""+calculateDistance(sx, sy, s2x, s2y));
@@ -98,6 +102,7 @@ public class Game implements Serializable {
 
     public void shot(int id) {
         missils.add(new Missil(ships.get(id), id));
+        ships.get(id).setActive(true);
     }
 
     public void addSpaceship(int id){

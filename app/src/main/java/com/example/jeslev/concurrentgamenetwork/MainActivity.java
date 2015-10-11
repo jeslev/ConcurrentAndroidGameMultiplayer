@@ -1,6 +1,8 @@
 package com.example.jeslev.concurrentgamenetwork;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,14 +11,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import static android.view.View.OnClickListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button startButton;
+    Button startButton,connecButton;
     EditText ipText;
-    String TAG_IP = "ip";
+    TextView name,state;
+    ImageView image;
+
+    String TAG_SOCKET = "socket";
+    int idClient;
+    public static TCPClient tcpClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,16 +36,32 @@ public class MainActivity extends AppCompatActivity {
 
         ipText = (EditText) findViewById(R.id.ipText);
 
+        name = (TextView) findViewById(R.id.labelPlayerName2);
+        state = (TextView) findViewById(R.id.labelState);
+
         startButton = (Button) findViewById(R.id.startButton);
+
+        connecButton = (Button) findViewById(R.id.connectButton);
+
+        image = (ImageView) findViewById(R.id.imageView);
+
+        connecButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String iptxt = ipText.getText().toString();
+
+                ConnectServer task = new ConnectServer();
+                task.execute(iptxt);
+
+            }
+        });
 
         startButton.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View arg0) {
 
-                String iptxt = ipText.getText().toString();
-
                 Intent scenarioIntent = new Intent(getApplicationContext(),ScenarioActivity.class);
-                scenarioIntent.putExtra(TAG_IP,iptxt);
                 startActivity(scenarioIntent);
 
             }
@@ -63,5 +88,40 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public class ConnectServer extends AsyncTask<String,String,String> {
+
+        private ProgressDialog dialog;
+
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            dialog = new ProgressDialog(MainActivity.this);
+            dialog.setMessage("Espere por favor ...");
+            dialog.show();
+        }
+
+
+        @Override
+        protected void onPostExecute(String result){
+            super.onPostExecute(result);
+            if(dialog.isShowing()) dialog.dismiss();
+            idClient = tcpClient.getContainer().getID();
+            name.setText("Jugador " + idClient);
+            state.setText("Conectado");
+            if(idClient==1) image.setImageResource(R.drawable.spaceship);
+            if(idClient==2) image.setImageResource(R.drawable.spaceship);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            tcpClient = new TCPClient(params[0]);
+            return null;
+        }
+
+
     }
 }

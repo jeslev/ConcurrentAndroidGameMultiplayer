@@ -63,22 +63,22 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         setFocusable(true);
 
         shipsDrawOn[1] = BitmapFactory.decodeResource(getResources(),
-                R.drawable.spaceship2);
+                R.drawable.spaceship6);
 
         shipsDrawOn[0] = BitmapFactory.decodeResource(getResources(),
                 R.drawable.spaceship4);
 
         shipsDrawOn[2] = BitmapFactory.decodeResource(getResources(),
-                R.drawable.spaceship4);
+                R.drawable.spaceship8);
 
         shipsDrawOff[1] = BitmapFactory.decodeResource(getResources(),
-                R.drawable.spaceship);
+                R.drawable.spaceship5);
 
         shipsDrawOff[0] = BitmapFactory.decodeResource(getResources(),
                 R.drawable.spaceship3);
 
         shipsDrawOff[2] = BitmapFactory.decodeResource(getResources(),
-                R.drawable.spaceship3);
+                R.drawable.spaceship7);
 
         bitmapMissil = BitmapFactory.decodeResource(getResources(),
                 R.drawable.misil);

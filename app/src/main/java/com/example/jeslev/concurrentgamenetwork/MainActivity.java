@@ -112,9 +112,9 @@ public class MainActivity extends AppCompatActivity {
             idClient = tcpClient.getContainer().getID();
             name.setText("Jugador " + idClient);
             state.setText("Conectado");
-            if(idClient==1) image.setImageResource(R.drawable.spaceship);
-            if(idClient==2) image.setImageResource(R.drawable.spaceship);
-            if(idClient==3) image.setImageResource(R.drawable.spaceship);
+            if(idClient==1) image.setImageResource(R.drawable.spaceship5);
+            if(idClient==2) image.setImageResource(R.drawable.spaceship7);
+            if(idClient==3) image.setImageResource(R.drawable.spaceship3);
         }
 
         @Override

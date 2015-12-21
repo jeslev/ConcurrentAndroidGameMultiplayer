@@ -18,6 +18,9 @@ import android.view.SurfaceView;
  */
 public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback {
 
+    /*Mando*/
+    Bitmap buttonA, buttonB, buttonUp, buttonDown, buttonRight, buttonLeft;
+    /*---FIN--*/
 
     Bitmap bitmapMissil;
     Game game;
@@ -81,6 +84,21 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
         bitmapMissil = BitmapFactory.decodeResource(getResources(),
                 R.drawable.misil);
+
+        /*Mando*/
+        buttonA = BitmapFactory.decodeResource(getResources(),
+                R.drawable.buttona);
+        buttonB = BitmapFactory.decodeResource(getResources(),
+                R.drawable.buttonb);
+        buttonUp = BitmapFactory.decodeResource(getResources(),
+                R.drawable.buttonup);
+        buttonDown = BitmapFactory.decodeResource(getResources(),
+                R.drawable.buttondown);
+        buttonRight = BitmapFactory.decodeResource(getResources(),
+                R.drawable.buttonright);
+        buttonLeft = BitmapFactory.decodeResource(getResources(),
+                R.drawable.buttonleft);
+        /*---FIN--*/
 
         paint2.setColor(Color.BLUE);
         paint2.setStyle(Paint.Style.FILL);
@@ -252,17 +270,23 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         canvas.drawBitmap(scaled, 0, 0, null);
 
         if(playingVisible && playing) {
-            canvas.drawCircle(100, wy - 150, 30, paint2); // up arrow
+            //canvas.drawCircle(100, wy - 150, 30, paint2); // up arrow
+            canvas.drawBitmap(buttonUp, 70, wy - 180, null);
 
-            canvas.drawCircle(100, wy - 50, 30, paint2); // down arrow
+            //canvas.drawCircle(100, wy - 50, 30, paint2); // down arrow
+            canvas.drawBitmap(buttonDown, 70, wy - 80, null);
 
-            canvas.drawCircle(50, wy - 100, 30, paint2); // left arrow
+            //canvas.drawCircle(50, wy - 100, 30, paint2); // left arrow
+            canvas.drawBitmap(buttonLeft, 20, wy - 130, null);
 
-            canvas.drawCircle(150, wy - 100, 30, paint2); // right arrow
+            //canvas.drawCircle(150, wy - 100, 30, paint2); // right arrow
+            canvas.drawBitmap(buttonRight, 120, wy - 130, null);
 
-            canvas.drawCircle(wx - 150, wy - 150, 30, paint2); // a button
+            //canvas.drawCircle(wx - 150, wy - 150, 30, paint2); // a button
+            canvas.drawBitmap(buttonA, wx - 180, wy - 180, null);
+            canvas.drawBitmap(buttonB, wx - 180, wy - 80, null);
+            //canvas.drawCircle(wx - 150, wy - 50, 30, paint2); // b button
 
-            canvas.drawCircle(wx - 150, wy - 50, 30, paint2); // b button
             if(game.getShips().size()>1){
                 int cntPlaying = 0;
                 for(Spaceship tmpShip : game.getShips()){

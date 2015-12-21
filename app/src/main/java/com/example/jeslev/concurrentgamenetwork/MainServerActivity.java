@@ -3,38 +3,38 @@ package com.example.jeslev.concurrentgamenetwork;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity {
+import static android.view.View.OnClickListener;
 
-    Button buttonServer, buttonClient;
+public class MainServerActivity extends AppCompatActivity {
+
+    Button startButton;
+
+    ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_server_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        buttonServer = (Button) findViewById(R.id.serverButton);
-        buttonClient = (Button) findViewById(R.id.clientButton);
+        startButton = (Button) findViewById(R.id.startButton);
+        image = (ImageView) findViewById(R.id.imageView);
 
-        buttonServer.setOnClickListener(new View.OnClickListener() {
+        image.setImageResource(R.drawable.spaceship3);
+
+        startButton.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View arg0) {
 
-                Intent scenarioIntent = new Intent(getApplicationContext(), MainServerActivity.class);
-
-                startActivity(scenarioIntent);
-
-            }
-        });
-        buttonClient.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-
-                Intent scenarioIntent = new Intent(getApplicationContext(), MainClientActivity.class);
+                Intent scenarioIntent = new Intent(getApplicationContext(),ScenarioServerActivity.class);
 
                 startActivity(scenarioIntent);
 

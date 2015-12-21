@@ -16,7 +16,7 @@ import android.view.SurfaceView;
 /**
  * Created by yarvis on 07/10/15.
  */
-public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback {
+public class MySurfaceClientView extends SurfaceView implements SurfaceHolder.Callback {
 
     /*Mando*/
     Bitmap buttonA, buttonB, buttonUp, buttonDown, buttonRight, buttonLeft;
@@ -28,43 +28,38 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     private final Paint paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint paint3 = new Paint(Paint.ANTI_ALIAS_FLAG);
-
     int xx = 100;
     int yy = 150;
 
-    TCPServer tcpServer;
-
-    private MainThread thread;
-
-    Bitmap shipsDrawOn[] , shipsDrawOff[];
-
     public boolean playingVisible, playing;
 
+    private MainThread thread;
+    TCPClient tcpClient;
+    int idClient = 1;
+
+    float dpx, dpy,mdpx,mdpy;
+
     Context context;
-
-    float dpx,dpy,mdpx,mdpy;
-
-    public MySurfaceView(Context context, TCPServer tcpServer) {
+    Bitmap shipsDrawOn[] , shipsDrawOff[];
+    public MySurfaceClientView(Context context, TCPClient tcpClient) {
 
         super(context);
         this.context =context;
-
         //add callback to the surface holder (to detect press button (events) )
         getHolder().addCallback(this);
 
         shipsDrawOff = new Bitmap[3];
         shipsDrawOn = new Bitmap[3];
 
-        game = new Game();
+        this.tcpClient = tcpClient;
+        this.tcpClient.setSurface(this);
+        idClient = this.tcpClient.getContainer().getID();
+        game = this.tcpClient.getContainer().getGame();
 
+        //Log.e("Game Live: ", ""+idClient);
+        game.getShip(idClient).setLiveVisible(true);
 
         thread = new MainThread(getHolder(), this);
-
-        this.tcpServer = tcpServer;
-
-        this.tcpServer.setSurface(this);
-        playingVisible=true;
-        playing=true;
 
         //focusable to get touch events
         setFocusable(true);
@@ -113,6 +108,8 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         paint3.setTypeface(Typeface.create(paint3.getTypeface(), Typeface.BOLD));
         paint3.setStyle(Paint.Style.FILL);
 
+        playingVisible=true;
+        playing = true;
 
         dpx = convertPixelsToDp(43.0f,context)/2.0f;
         dpy = convertPixelsToDp(40.0f,context)/2.0f;
@@ -138,88 +135,82 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-
         //start the game loop
-        //Log.e("WX, WY: ", ""+getWidth()+" "+getHeight());
         game.setWXY(getWidth(), getHeight() );
-        game.addSpaceship(0);
         thread.setRunning(true);
         thread.start();
+    }
+
+    public void updateToServer(){
+        if(tcpClient!=null){
+            tcpClient.sendMessage(game);
+
+        }
+        else Log.e("TCP", "tcp NULL");
 
     }
 
-    public void updateToClients(){
-        if(tcpServer!=null){
-            tcpServer.sendMessage(game);
-
-        }
-        else Log.e("TCP","tcp NULL");
-    }
-
-    public void updateToClients(int id){
-        if(tcpServer!=null){
-            tcpServer.sendMessage(game,id);
-
-        }
-        else Log.e("TCP","tcp NULL");
+    public synchronized void setGame(Game tmp){
+        game=tmp;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
         if(!playingVisible) return true;
+
         int wx = getWidth();
         int wy = getHeight();
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                updateState(event.getX(), event.getY(), wx, wy, 0);
-
+                updateState(event.getX(), event.getY(), wx, wy, this.idClient);
                 break;
             case MotionEvent.ACTION_UP:
-                updateState(event.getX(), event.getY(), wx, wy,false, 0);
+                updateState(event.getX(), event.getY(), wx, wy,false, this.idClient);
                 break;
             case MotionEvent.ACTION_MOVE:
                 break;
             case MotionEvent.ACTION_CANCEL:
-                updateState(event.getX(), event.getY(), wx, wy,false, 0);
+                updateState(event.getX(), event.getY(), wx, wy,false, this.idClient);
                 break;
         }
+
+
 
         return true;
     }
 
     public void updateState(float x,float y,int wx,int wy, int id){
-
         if( 70 < x && x<130 && (wy-180)< y && y<(wy-120) ){
             game.rotateRight(id);
-            updateToClients();
+            updateToServer();
         }
 
         if( 70 < x && x<130 && (wy-80)<y && y<(wy-20) ){
             game.rotateLeft(id);
-            updateToClients();
+            updateToServer();
         }
 
         if( 20 < x && x<80 && (wy-130)< y && y<(wy-70) ){
             game.rotateRight(id);
-            updateToClients();
+            updateToServer();
         }
 
         if( 120 < x && x<180 && (wy-130)<y && y<(wy-70) ){
             game.rotateLeft(id);
-            updateToClients();
+            updateToServer();
         }
 
         if( (wx-180) < x && x<(wx-120) && (wy-180)< y && y<(wy-120) ){
             game.turbo(id);
             game.noRotate(id);
-            updateToClients();
+            updateToServer();
         }
 
         if( (wx-180) < x && x<(wx-120) && (wy-80)< y && y<(wy-20) ){
             game.shot(id);
-            updateToClients();
+            updateToServer();
         }
 
     }
@@ -227,44 +218,45 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     public void updateState(float x,float y,int wx,int wy,boolean stop, int id){
         if( 70 < x && x<130 && (wy-180)< y && y<(wy-120) ){
             game.noRotate(id);
-            updateToClients();
+            updateToServer();
         }
 
         if( 70 < x && x<130 && (wy-80)<y && y<(wy-20) ){
             game.noRotate(id);
-            updateToClients();
+            updateToServer();
         }
 
         if( 20 < x && x<80 && (wy-130)< y && y<(wy-70) ){
             game.noRotate(id);
-            updateToClients();
+            updateToServer();
         }
 
         if( 120 < x && x<180 && (wy-130)<y && y<(wy-70) ){
             game.noRotate(id);
-            updateToClients();
+            updateToServer();
         }
 
         if( (wx-180) < x && x<(wx-120) && (wy-180)< y && y<(wy-120) ){
             game.noRotate(id);
-            updateToClients();
+            updateToServer();
         }
 
         if( (wx-180) < x && x<(wx-120) && (wy-80)< y && y<(wy-20) ){
-            updateToClients();
         }
 
     }
 
+
     public void update(){
-        game.update(getWidth(), getHeight(),dpx,mdpx );
-        playingVisible = game.getShips().get(0).getLiveVisible();
-        playing = game.getShips().get(0).getLive();
-    } /*noamlr*/
+        game.update(getWidth(), getHeight(),dpx,mdpx);
+        playingVisible = game.getShips().get(idClient).getLiveVisible();
+        playing = game.getShips().get(idClient).getLive();
+    };
 
 
     public void doDraw(Canvas canvas) { /*noamlr se le agregó el id*/
 
+        //Log.e("draw","init draw "+id );
         int wx = getWidth();
         int wy = getHeight();
 
@@ -306,9 +298,10 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             canvas.drawText("Te reventaron!", 100,wy-100,paint3);
         }
 
+
         dpx = convertPixelsToDp(43.0f,context)/2.0f;
         dpy = convertPixelsToDp(40.0f,context)/2.0f;
-        //Log.e("ERR",""+dpx+" "+dpy);
+
         int cnt = -1;
         for(Spaceship ship : game.getShips()){
             cnt++;
@@ -321,6 +314,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
                 canvas.drawBitmap(shipsDrawOn[cnt], matrix, null);
                 //canvas.drawCircle(ship.getPosX(), ship.getPosY(), 10, paint3);
+                //System.err.println(ship.getPosX() + " " + ship.getPosY() + " " + ship.getAngle());
 
             }else{
                 Matrix matrix = new Matrix();
@@ -329,15 +323,16 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
                 matrix.postTranslate((float) (ship.getPosX() - dpx), ship.getPosY() - dpy); //noamlr
                 canvas.drawBitmap(shipsDrawOff[cnt], matrix, null);
                 //canvas.drawCircle(ship.getPosX(), ship.getPosY(), 10, paint3);
+                //System.err.println(ship.getPosX() + " " + ship.getPosY() + " " + ship.getAngle())
             }
         }
 
 
         mdpx = convertPixelsToDp(22.0f,context)/2.0f;
-        mdpy = convertPixelsToDp(6.0f, context) / 2.0f;
+        mdpy = convertPixelsToDp(6.0f,context)/2.0f;
 
-        for(Missil tmpmissil : game.getMissil()) {
-            if (!tmpmissil.getActive()) continue;
+        for(Missil tmpmissil : game.getMissil()){
+            if(!tmpmissil.getActive()) continue;
             Matrix matrix = new Matrix();
             matrix.postRotate(tmpmissil.getAnglePosition(), mdpx, mdpy);
             matrix.postTranslate(tmpmissil.getPosX() - mdpx, tmpmissil.getPosY() - mdpy);
@@ -347,15 +342,11 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     }
 
 
-    public synchronized void setGame(Game tmp,int id){
-        game=tmp;
-        updateToClients(id);
-    }
+
 
     public Game getGame(){
         return game;
     }
-
 
     public static float convertPixelsToDp(float px, Context context){
         return px * context.getResources().getDisplayMetrics().density;

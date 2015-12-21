@@ -15,7 +15,8 @@ public class TCPServer {
     public static final int SERVERPORT = 4444;
     private OnMessageReceived messageListener = null;
     private boolean running = false;
-    public MySurfaceView mySurfaceView;
+    public MySurfaceServerView mySurfaceServerView;
+   // public MySurfaceClientView mySurfaceClientView;
 
     ArrayList<ClientThread> threads;
 
@@ -55,9 +56,10 @@ public class TCPServer {
         running = false;
     }
 
-    public void setSurface(MySurfaceView surface){      //noamlr
-        this.mySurfaceView = surface;
+    public void setSurface(MySurfaceServerView surface){      //noamlr
+        this.mySurfaceServerView = surface;
     }
+    //public void setSurface(MySurfaceClientView surface){  this.mySurfaceClientView = surface; }
 
     public void run() {
         running = true;
@@ -74,7 +76,11 @@ public class TCPServer {
                 //System.out.println("S: Receiving...");
                 //Log.e("TCP Server", "S: Receiving...");
                 id++;
-                ClientThread tmpThread = new ClientThread(client, id, messageListener, this.mySurfaceView);
+                ClientThread tmpThread = null;
+                //if(this.mySurfaceServerView==null)
+                    tmpThread = new ClientThread(client, id, messageListener, this.mySurfaceServerView);
+                //else if(this.mySurfaceClientView==null)
+                //    tmpThread = new ClientThread(client, id, messageListener, this.mySurfaceClientView);
 
                 threads.add(tmpThread);
                 tmpThread.start();

@@ -17,7 +17,8 @@ public class ClientThread extends Thread {
 
     private TCPServer.OnMessageReceived messageListener = null;
 
-    MySurfaceView mySurfaceView;
+    MySurfaceServerView mySurfaceServerView;
+//    MySurfaceClientView mySurfaceClientView;
     int id;
     OutputStream oStream;
     ObjectOutputStream ooStream;
@@ -27,13 +28,22 @@ public class ClientThread extends Thread {
 
     boolean running=false;
 
-    public ClientThread(Socket socket,int id, TCPServer.OnMessageReceived messageListener, MySurfaceView mySurfaceView){
+    public ClientThread(Socket socket,int id, TCPServer.OnMessageReceived messageListener, MySurfaceServerView mySurfaceView){
         this.socket = socket;
         this.id = id;
         this.messageListener = messageListener;
-        this.mySurfaceView = mySurfaceView;
+        this.mySurfaceServerView = mySurfaceView;
+       // this.mySurfaceClientView = null;
     }
-
+/*
+    public ClientThread(Socket socket,int id, TCPServer.OnMessageReceived messageListener, MySurfaceClientView mySurfaceView){
+        this.socket = socket;
+        this.id = id;
+        this.messageListener = messageListener;
+        this.mySurfaceClientView = mySurfaceView;
+        this.mySurfaceServerView = null;
+    }
+*/
     public int getID(){ return id;}
 
     @Override
@@ -53,9 +63,12 @@ public class ClientThread extends Thread {
 
             //Send to client ID and game state to start playing
             ooStream.reset();
-            Game gameTemp = mySurfaceView.getGame();
+            Game gameTemp = mySurfaceServerView.getGame();
+            //else if(mySurfaceClientView==null)
+            //    gameTemp = mySurfaceClientView.getGame();
             gameTemp.addSpaceship(id);
             gameTemp.getShip(id).setLiveVisible(false);
+            Log.e("GAME ID","num "+id);
             ooStream.writeObject(new Container(gameTemp,id));
             ooStream.flush();
 

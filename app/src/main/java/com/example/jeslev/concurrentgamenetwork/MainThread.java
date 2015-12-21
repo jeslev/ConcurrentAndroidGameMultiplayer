@@ -11,14 +11,23 @@ public class MainThread extends Thread {
     private int FPS = 60;
     private double averageFPS;
     private SurfaceHolder surfaceHolder;
-    private MySurfaceView surfaceView;
+    private MySurfaceServerView surfaceServerView;
+    private MySurfaceClientView surfaceClientView;
     private boolean running;
     public static Canvas canvas;
 
-    public MainThread(SurfaceHolder surfaceHolder, MySurfaceView surfaceView){
+    public MainThread(SurfaceHolder surfaceHolder, MySurfaceServerView surfaceView){
         super();
         this.surfaceHolder = surfaceHolder;
-        this.surfaceView = surfaceView;
+        this.surfaceServerView = surfaceView;
+        this.surfaceClientView = null;
+    }
+
+    public MainThread(SurfaceHolder surfaceHolder, MySurfaceClientView surfaceView){
+        super();
+        this.surfaceHolder = surfaceHolder;
+        this.surfaceServerView = null;
+        this.surfaceClientView = surfaceView;
     }
 
     @Override
@@ -38,9 +47,14 @@ public class MainThread extends Thread {
             try{
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder){
-
-                    this.surfaceView.update();     /*noamlr*/
-                    this.surfaceView.doDraw(canvas); /*noamlr*/
+                if(this.surfaceClientView!=null) {
+                    this.surfaceClientView.update();     /*noamlr*/
+                    this.surfaceClientView.doDraw(canvas); /*noamlr*/
+                }
+                if(this.surfaceServerView!=null) {
+                    this.surfaceServerView.update();     /*noamlr*/
+                    this.surfaceServerView.doDraw(canvas); /*noamlr*/
+                }
 
                 }
 

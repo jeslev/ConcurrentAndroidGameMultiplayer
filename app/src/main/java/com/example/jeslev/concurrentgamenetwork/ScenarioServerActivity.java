@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-public class ScenarioActivity extends AppCompatActivity {
+public class ScenarioServerActivity extends AppCompatActivity {
 
-    public MySurfaceView SurfaceViewX;
+    public MySurfaceServerView SurfaceViewX;
     final MediaPlayer mp = new MediaPlayer();
 
     public TCPServer tcpServer;
@@ -19,7 +19,7 @@ public class ScenarioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scenario);
+        setContentView(R.layout.activity_server_scenario);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -41,7 +41,7 @@ public class ScenarioActivity extends AppCompatActivity {
         connectTask = new ConnectTask();
 
 
-        SurfaceViewX = new MySurfaceView(this,tcpServer); // "this" send context of the current class
+        SurfaceViewX = new MySurfaceServerView(this,tcpServer); // "this" send context of the current class
         setContentView(SurfaceViewX);
 
 

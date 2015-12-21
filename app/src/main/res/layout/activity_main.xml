@@ -4,6 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/background"
     tools:context="com.example.jeslev.concurrentgamenetwork.MainActivity">
 
     <Button
@@ -11,7 +12,10 @@
         android:layout_height="wrap_content"
         android:text="Modo Servidor"
         android:layout_weight="1.0"
-        android:id="@+id/serverButton" />
+        android:id="@+id/serverButton"
+        android:layout_above="@+id/clientButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="65dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -19,9 +23,27 @@
         android:text="Modo Cliente"
         android:layout_weight="1.0"
         android:id="@+id/clientButton"
-        android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/serverButton"
-        android:layout_alignEnd="@+id/serverButton" />
+        android:layout_marginBottom="52dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="65dp"
+        android:id="@+id/imageTittle"
+        android:layout_weight="1.0"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:id="@+id/imageNaves"
+        android:layout_above="@+id/serverButton"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

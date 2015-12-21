@@ -7,10 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
     Button buttonServer, buttonClient;
+
+    ImageView image, image2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +22,11 @@ public class MainActivity extends AppCompatActivity {
 
         buttonServer = (Button) findViewById(R.id.serverButton);
         buttonClient = (Button) findViewById(R.id.clientButton);
+        image = (ImageView) findViewById(R.id.imageTittle);
+        image2 = (ImageView) findViewById(R.id.imageNaves);
+
+        image.setImageResource(R.drawable.tittle);
+        image2.setImageResource(R.drawable.caratula);
 
         buttonServer.setOnClickListener(new View.OnClickListener() {
             @Override

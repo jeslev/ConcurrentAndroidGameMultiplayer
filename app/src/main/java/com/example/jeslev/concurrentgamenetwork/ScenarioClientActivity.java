@@ -50,12 +50,9 @@ public class ScenarioClientActivity extends AppCompatActivity {
 
         connectTask  = new ConnectTask();
 
-
         SurfaceViewX = new MySurfaceClientView(this, tcpClient); // "this" send context of the current class
         setContentView(SurfaceViewX);
         connectTask.execute("");
-
-
     }
 
 
@@ -75,8 +72,6 @@ public class ScenarioClientActivity extends AppCompatActivity {
     public class ConnectTask extends AsyncTask<String,Game,TCPClient> {
         String myip;
 
-
-
         public ConnectTask(){
             //creamos el objeto TCPClient
             tcpClient.setMessageReceived(new TCPClient.OnMessageReceived() {
@@ -85,7 +80,6 @@ public class ScenarioClientActivity extends AppCompatActivity {
                     publishProgress(message);
                 }
             });
-
         }
 
         @Override
@@ -100,7 +94,4 @@ public class ScenarioClientActivity extends AppCompatActivity {
             SurfaceViewX.setGame(values[0]);
         }
     }
-
-
-
 }

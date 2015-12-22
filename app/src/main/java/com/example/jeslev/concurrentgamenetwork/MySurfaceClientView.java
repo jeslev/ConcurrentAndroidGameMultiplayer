@@ -20,6 +20,7 @@ public class MySurfaceClientView extends SurfaceView implements SurfaceHolder.Ca
 
     /*Mando*/
     Bitmap buttonA, buttonB, buttonUp, buttonDown, buttonRight, buttonLeft;
+    Bitmap bitmapAsteroid;
     /*---FIN--*/
 
     Bitmap bitmapMissil;
@@ -37,7 +38,7 @@ public class MySurfaceClientView extends SurfaceView implements SurfaceHolder.Ca
     TCPClient tcpClient;
     int idClient = 1;
 
-    float dpx, dpy,mdpx,mdpy;
+    float dpx, dpy,mdpx,mdpy, adpx;
 
     Context context;
     Bitmap shipsDrawOn[] , shipsDrawOff[];
@@ -85,6 +86,9 @@ public class MySurfaceClientView extends SurfaceView implements SurfaceHolder.Ca
         bitmapMissil = BitmapFactory.decodeResource(getResources(),
                 R.drawable.misil);
 
+        bitmapAsteroid = BitmapFactory.decodeResource(getResources(),
+                R.drawable.asteroide);
+
         /*Mando*/
         buttonA = BitmapFactory.decodeResource(getResources(),
                 R.drawable.buttona);
@@ -116,6 +120,7 @@ public class MySurfaceClientView extends SurfaceView implements SurfaceHolder.Ca
 
         mdpx = convertPixelsToDp(22.0f,context)/2.0f;
         mdpy = convertPixelsToDp(6.0f,context)/2.0f;
+        adpx = convertPixelsToDp(22.0f,context)/2.0f;
     }
 
 
@@ -330,6 +335,7 @@ public class MySurfaceClientView extends SurfaceView implements SurfaceHolder.Ca
 
         mdpx = convertPixelsToDp(22.0f,context)/2.0f;
         mdpy = convertPixelsToDp(6.0f,context)/2.0f;
+        adpx = convertPixelsToDp(27.0f,context)/2.0f;
 
         for(Missil tmpmissil : game.getMissil()){
             if(!tmpmissil.getActive()) continue;
@@ -337,6 +343,16 @@ public class MySurfaceClientView extends SurfaceView implements SurfaceHolder.Ca
             matrix.postRotate(tmpmissil.getAnglePosition(), mdpx, mdpy);
             matrix.postTranslate(tmpmissil.getPosX() - mdpx, tmpmissil.getPosY() - mdpy);
             canvas.drawBitmap(bitmapMissil, matrix, null);
+            //canvas.drawCircle(tmpmissil.getPosX(), tmpmissil.getPosY(), 6, paint3);
+        }
+
+
+        for(Asteroid tmpasteroid : game.getAsteroids()) {
+            if (!tmpasteroid.getActive()) continue;
+            Matrix matrix = new Matrix();
+            matrix.postRotate(tmpasteroid.getAnglePosition(), adpx, adpx);
+            matrix.postTranslate(tmpasteroid.getPosX() - adpx, tmpasteroid.getPosY() - adpx);
+            canvas.drawBitmap(bitmapAsteroid, matrix, null);
             //canvas.drawCircle(tmpmissil.getPosX(), tmpmissil.getPosY(), 6, paint3);
         }
     }

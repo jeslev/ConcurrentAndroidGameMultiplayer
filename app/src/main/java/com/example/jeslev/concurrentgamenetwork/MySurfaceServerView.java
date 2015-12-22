@@ -13,13 +13,18 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.Random;
+
 /**
  * Created by yarvis on 07/10/15.
  */
 public class MySurfaceServerView extends SurfaceView implements SurfaceHolder.Callback {
 
+    Random rand = new Random();
     /*Mando*/
     Bitmap buttonA, buttonB, buttonUp, buttonDown, buttonRight, buttonLeft;
+    Bitmap bitmapAsteroid;
+    public int level;
     /*---FIN--*/
 
     Bitmap bitmapMissil;
@@ -46,13 +51,13 @@ public class MySurfaceServerView extends SurfaceView implements SurfaceHolder.Ca
 
     Context context;
 
-    float dpx,dpy,mdpx,mdpy;
+    float dpx,dpy,mdpx,mdpy, adpx;
 
     public MySurfaceServerView(Context context, TCPServer tcpServer) {
 
         super(context);
         this.context =context;
-
+        this.level = 1;
         //add callback to the surface holder (to detect press button (events) )
         getHolder().addCallback(this);
 
@@ -94,6 +99,9 @@ public class MySurfaceServerView extends SurfaceView implements SurfaceHolder.Ca
         bitmapMissil = BitmapFactory.decodeResource(getResources(),
                 R.drawable.misil);
 
+        bitmapAsteroid = BitmapFactory.decodeResource(getResources(),
+                R.drawable.asteroide);
+
         /*Mando*/
         buttonA = BitmapFactory.decodeResource(getResources(),
                 R.drawable.buttona);
@@ -123,6 +131,7 @@ public class MySurfaceServerView extends SurfaceView implements SurfaceHolder.Ca
 
         mdpx = convertPixelsToDp(22.0f,context)/2.0f;
         mdpy = convertPixelsToDp(6.0f,context)/2.0f;
+        adpx = convertPixelsToDp(27.0f,context)/2.0f;
     }
 
 
@@ -226,6 +235,13 @@ public class MySurfaceServerView extends SurfaceView implements SurfaceHolder.Ca
             updateToClients();
         }
 
+        /*NOAMLR ASTEROID*/
+        if( rand.nextInt(100)<5*level ){
+            game.shotAsteroid(10);
+            updateToClients();
+        }
+        /*FIN: ASTEROID*/
+
     }
 
     public void updateState(float x,float y,int wx,int wy,boolean stop, int id){
@@ -257,6 +273,13 @@ public class MySurfaceServerView extends SurfaceView implements SurfaceHolder.Ca
         if( (wx-180) < x && x<(wx-120) && (wy-80)< y && y<(wy-20) ){
             updateToClients();
         }
+
+        /*NOAMLR ASTEROID*/
+        if( rand.nextInt(100)<5*level ){
+            game.shotAsteroid(10);
+            updateToClients();
+        }
+        /*FIN: ASTEROID*/
 
     }
 
@@ -340,12 +363,23 @@ public class MySurfaceServerView extends SurfaceView implements SurfaceHolder.Ca
         mdpx = convertPixelsToDp(22.0f,context)/2.0f;
         mdpy = convertPixelsToDp(6.0f, context) / 2.0f;
 
+        adpx = convertPixelsToDp(37.0f, context) /2.0f;
+
         for(Missil tmpmissil : game.getMissil()) {
             if (!tmpmissil.getActive()) continue;
             Matrix matrix = new Matrix();
             matrix.postRotate(tmpmissil.getAnglePosition(), mdpx, mdpy);
             matrix.postTranslate(tmpmissil.getPosX() - mdpx, tmpmissil.getPosY() - mdpy);
             canvas.drawBitmap(bitmapMissil, matrix, null);
+            //canvas.drawCircle(tmpmissil.getPosX(), tmpmissil.getPosY(), 6, paint3);
+        }
+
+        for(Asteroid tmpasteroid : game.getAsteroids()) {
+            if (!tmpasteroid.getActive()) continue;
+            Matrix matrix = new Matrix();
+            matrix.postRotate(tmpasteroid.getAnglePosition(), adpx, adpx);
+            matrix.postTranslate(tmpasteroid.getPosX() - adpx, tmpasteroid.getPosY() - adpx);
+            canvas.drawBitmap(bitmapAsteroid, matrix, null);
             //canvas.drawCircle(tmpmissil.getPosX(), tmpmissil.getPosY(), 6, paint3);
         }
     }

@@ -82,7 +82,7 @@ public class Game implements Serializable {
                     tmpShip.setLive(false);
                     tmpShip2.setLive(false);
                     tmpShip.setLiveVisible(false);
-                    tmpShip2.setLiveVisibfalse);
+                    tmpShip2.setLiveVisible(false);
                     //Log.e("Colision TM: ", "" + sx + " " + sy + " " + s2x + " " + s2y);
                 }
             }

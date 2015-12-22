@@ -13,10 +13,12 @@ public class Game implements Serializable {
     ArrayList<Asteroid> asteroids;
     int wx, wy;
     int idSpaceship;
+    int level;
 
     boolean players[];
 
     public Game(){
+        level = 1;
         ships = new ArrayList<Spaceship>();
         missils = new ArrayList<Missil>();
         asteroids = new ArrayList<Asteroid>();
@@ -140,6 +142,9 @@ public class Game implements Serializable {
         this.wx=wx;
         this.wy=wy;
     }
+
+    public int getLevel(){ return level;}
+    public void setLevel(int level){ this.level = level;}
 
 
 }

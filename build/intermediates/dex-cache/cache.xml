@@ -2,6 +2,13 @@
 <items version="2" >
 
     <item
+        jar="/home/noa/Documents/CICLOS/OCTAVO/NUCLEO/FINAL/ConcurrentAndroidGameMultiplayer/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="/home/noa/Documents/CICLOS/OCTAVO/NUCLEO/FINAL/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-f434dc013397fd046c92402d08305fd1421a6bd0.jar" />
+    </item>
+    <item
         jar="/home/noa/Documents/CICLOS/OCTAVO/NUCLEO/FINAL/ConcurrentAndroidGameMultiplayer/app/build/intermediates/exploded-aar/com.android.support/design/23.0.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
@@ -9,18 +16,11 @@
         <dex dex="/home/noa/Documents/CICLOS/OCTAVO/NUCLEO/FINAL/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/classes-42c2ba1409f898213aaaab32dbe57843812d820d.jar" />
     </item>
     <item
-        jar="/home/noa/Documents/CICLOS/OCTAVO/NUCLEO/FINAL/ConcurrentAndroidGameMultiplayer/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
+        jar="/home/noa/Documents/CICLOS/OCTAVO/NUCLEO/FINAL/ConcurrentAndroidGameMultiplayer/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="/home/noa/Documents/CICLOS/OCTAVO/NUCLEO/FINAL/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/classes-df91598081f54ae6d1dc71cddc6066e32a9478bc.jar" />
-    </item>
-    <item
-        jar="/home/noa/Documents/CICLOS/OCTAVO/NUCLEO/FINAL/ConcurrentAndroidGameMultiplayer/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="/home/noa/Documents/CICLOS/OCTAVO/NUCLEO/FINAL/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-f434dc013397fd046c92402d08305fd1421a6bd0.jar" />
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="/home/noa/Documents/CICLOS/OCTAVO/NUCLEO/FINAL/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/classes-bdd21f156530819b611db725d2a7128e32fd76fc.jar" />
     </item>
     <item
         jar="/home/noa/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
@@ -30,11 +30,11 @@
         <dex dex="/home/noa/Documents/CICLOS/OCTAVO/NUCLEO/FINAL/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1-041a1418fe6de26f03569470a683aedbd7aa6097.jar" />
     </item>
     <item
-        jar="/home/noa/Documents/CICLOS/OCTAVO/NUCLEO/FINAL/ConcurrentAndroidGameMultiplayer/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
+        jar="/home/noa/Documents/CICLOS/OCTAVO/NUCLEO/FINAL/ConcurrentAndroidGameMultiplayer/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="/home/noa/Documents/CICLOS/OCTAVO/NUCLEO/FINAL/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/classes-bdd21f156530819b611db725d2a7128e32fd76fc.jar" />
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="/home/noa/Documents/CICLOS/OCTAVO/NUCLEO/FINAL/ConcurrentAndroidGameMultiplayer/app/build/intermediates/pre-dexed/debug/classes-df91598081f54ae6d1dc71cddc6066e32a9478bc.jar" />
     </item>
 
 </items>

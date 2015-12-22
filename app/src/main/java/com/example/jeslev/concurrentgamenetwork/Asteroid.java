@@ -19,13 +19,13 @@ public class Asteroid implements Serializable {
 
     public Asteroid(int wx, int wy, int level){
         this.level = level;
-        speed[0] = 5;
-        speed[1] = 5;
+        Random rand = new Random();
+        speed[0] = rand.nextInt(10)*level;
+        speed[1] = rand.nextInt(10)*level;
 
         acceleration[0] = 2 + 10*level;
         acceleration[1] = 2 + 10*level;
 
-        Random rand = new Random();
         position[0] = rand.nextInt(wx-200) + 100;
         position[1] = rand.nextInt(wy-200) + 100;
 

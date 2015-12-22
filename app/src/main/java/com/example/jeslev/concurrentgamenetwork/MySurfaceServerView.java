@@ -33,6 +33,7 @@ public class MySurfaceServerView extends SurfaceView implements SurfaceHolder.Ca
 
     private final Paint paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint paint3 = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint paint4 = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     int xx = 100;
     int yy = 150;
@@ -125,6 +126,11 @@ public class MySurfaceServerView extends SurfaceView implements SurfaceHolder.Ca
         paint3.setTypeface(Typeface.create(paint3.getTypeface(), Typeface.BOLD));
         paint3.setStyle(Paint.Style.FILL);
 
+        paint4.setColor(Color.GREEN);
+        paint4.setTextSize(22);
+        paint4.setTypeface(Typeface.create(paint4.getTypeface(), Typeface.BOLD));
+        paint4.setStyle(Paint.Style.FILL);
+
 
         dpx = convertPixelsToDp(43.0f,context)/2.0f;
         dpy = convertPixelsToDp(40.0f,context)/2.0f;
@@ -203,7 +209,7 @@ public class MySurfaceServerView extends SurfaceView implements SurfaceHolder.Ca
     }
 
     public void updateState(float x,float y,int wx,int wy, int id){
-
+        //game.setLevel(level);
         if( 70 < x && x<130 && (wy-180)< y && y<(wy-120) ){
             game.rotateRight(id);
             updateToClients();
@@ -236,8 +242,8 @@ public class MySurfaceServerView extends SurfaceView implements SurfaceHolder.Ca
         }
 
         /*NOAMLR ASTEROID*/
-        if( rand.nextInt(100)<5*level ){
-            game.shotAsteroid(10);
+        if( rand.nextInt(100)<5*game.getLevel() ){
+            game.shotAsteroid(game.getLevel());
             updateToClients();
         }
         /*FIN: ASTEROID*/
@@ -245,6 +251,7 @@ public class MySurfaceServerView extends SurfaceView implements SurfaceHolder.Ca
     }
 
     public void updateState(float x,float y,int wx,int wy,boolean stop, int id){
+        //game.setLevel(level);
         if( 70 < x && x<130 && (wy-180)< y && y<(wy-120) ){
             game.noRotate(id);
             updateToClients();
@@ -275,8 +282,8 @@ public class MySurfaceServerView extends SurfaceView implements SurfaceHolder.Ca
         }
 
         /*NOAMLR ASTEROID*/
-        if( rand.nextInt(100)<5*level ){
-            game.shotAsteroid(10);
+        if( rand.nextInt(100)<5*game.getLevel() ){
+            game.shotAsteroid(game.getLevel());
             updateToClients();
         }
         /*FIN: ASTEROID*/
@@ -304,7 +311,9 @@ public class MySurfaceServerView extends SurfaceView implements SurfaceHolder.Ca
 
         canvas.drawBitmap(scaled, 0, 0, null);
 
+        canvas.drawText("Nivel "+game.getLevel(), 30,30,paint4);
         if(playingVisible && playing) {
+
             //canvas.drawCircle(100, wy - 150, 30, paint2); // up arrow
             canvas.drawBitmap(buttonUp, 70, wy - 180, null);
 
@@ -327,7 +336,16 @@ public class MySurfaceServerView extends SurfaceView implements SurfaceHolder.Ca
                 for(Spaceship tmpShip : game.getShips()){
                     if(tmpShip.getLive()) cntPlaying++;
                 }
-                if(cntPlaying==1)   canvas.drawText("Ganaste!", 100,100,paint3);
+                if(cntPlaying==1) {
+                    canvas.drawText("Ganaste!", 100, 100, paint3);
+                    if(game.getLevel()<6) {
+                        game.setLevel(game.getLevel() + 1);
+                        for(Spaceship tmpShip : game.getShips()){
+                            tmpShip.setLive(true);
+                            tmpShip.setLiveVisible(true);
+                        }
+                    }
+                }
             }
         }else{
             canvas.drawText("Te reventaron!", 100,wy-100,paint3);
